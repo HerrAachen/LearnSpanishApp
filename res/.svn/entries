@@ -1,64 +1,0 @@
-10
-
-dir
-1
-https://xp-dev.com/svn/LearnSpanishApp/res
-https://xp-dev.com/svn/LearnSpanishApp
-
-
-
-2014-01-11T07:14:03.817650Z
-1
-herraachen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ccb09b61-29bf-444d-a03b-dd2d0b624a75
-
-drawable-xxhdpi
-dir
-
-drawable-hdpi
-dir
-
-menu
-dir
-
-values-v11
-dir
-
-drawable-ldpi
-dir
-
-values-v14
-dir
-
-drawable-mdpi
-dir
-
-drawable-xhdpi
-dir
-
-layout
-dir
-
-values-sw720dp-land
-dir
-
-values
-dir
-
-values-sw600dp
-dir
-
