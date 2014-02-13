@@ -1,15 +1,17 @@
 package de.malikatalla.ling;
 
+import android.content.Context;
+import de.malikatalla.ling.ling.DbDictionary;
 import de.malikatalla.ling.ling.Dictionary;
-import de.malikatalla.ling.ling.DummyDictionary;
 
 public class Global {
 
 	private static Dictionary dictionary;
 	
-	static {
-		dictionary = new DummyDictionary();
-		dictionary.loadDictionary();
+	public static void init(Context context){
+//      dictionary = new DummyDictionary();
+      dictionary = new DbDictionary(context);
+	dictionary.loadDictionary();
 	}
 
 	public static Dictionary getDictionary() {

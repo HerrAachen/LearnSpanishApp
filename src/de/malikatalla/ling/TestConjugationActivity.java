@@ -3,9 +3,11 @@ package de.malikatalla.ling;
 import java.util.List;
 
 import de.malikatalla.ling.ling.Dictionary;
+import de.malikatalla.ling.ling.InMemDictionary;
 import de.malikatalla.ling.ling.Flection;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.EditText;
@@ -28,6 +30,7 @@ public class TestConjugationActivity extends Activity {
 		e.setOnEditorActionListener(new PressEnterListener());
 		TextView t=(TextView)findViewById(R.id.test_text);
 		currentVerb = verbs.get(0);
+		Log.i("TEST", currentVerb);
 		t.setText(currentVerb);
 		
 	}

@@ -1,6 +1,6 @@
 package de.malikatalla.ling.ling;
 
-public class DummyDictionary extends Dictionary {
+public class DummyDictionary extends InMemDictionary implements Dictionary {
 
   @Override
   public void loadDictionary() {
@@ -73,32 +73,32 @@ public class DummyDictionary extends Dictionary {
       infinitive2flections.put(verb.getInfinitive(), verb);
     }
     {
-      Flections verb = new Flections("tener");
-      verb.addInflectedForm(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, "tengo");
-      verb.addInflectedForm(Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, "tienes");
-      verb.addInflectedForm(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, "tiene");
-      verb.addInflectedForm(Tense.PRESENT, Person.FIRST, Number.PLURAL, null, "tenemos");
-      verb.addInflectedForm(Tense.PRESENT, Person.SECOND, Number.PLURAL, null, "tenéis");
-      verb.addInflectedForm(Tense.PRESENT, Person.THIRD, Number.PLURAL, null, "tienen");
-      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.FIRST, Number.SINGULAR, null, "tuve");
-      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.SECOND, Number.SINGULAR, null, "tuviste");
-      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.THIRD, Number.SINGULAR, null, "tuvo");
-      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.FIRST, Number.PLURAL, null, "tuvimos");
-      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.SECOND, Number.PLURAL, null, "tuvisteis");
-      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.THIRD, Number.PLURAL, null, "tuvieron");
-      verb.addInflectedForm(Tense.IMPERFECT, Person.FIRST, Number.SINGULAR, null, "tenía");
-      verb.addInflectedForm(Tense.IMPERFECT, Person.SECOND, Number.SINGULAR, null, "tenías");
-      verb.addInflectedForm(Tense.IMPERFECT, Person.THIRD, Number.SINGULAR, null, "tenía");
-      verb.addInflectedForm(Tense.IMPERFECT, Person.FIRST, Number.PLURAL, null, "teníamos");
-      verb.addInflectedForm(Tense.IMPERFECT, Person.SECOND, Number.PLURAL, null, "teníais");
-      verb.addInflectedForm(Tense.IMPERFECT, Person.THIRD, Number.PLURAL, null, "tenían");
-      verb.addInflectedForm(Tense.FUTURE, Person.FIRST, Number.SINGULAR, null, "tendré");
-      verb.addInflectedForm(Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, "tendrás");
-      verb.addInflectedForm(Tense.FUTURE, Person.THIRD, Number.SINGULAR, null, "tendrá");
-      verb.addInflectedForm(Tense.FUTURE, Person.FIRST, Number.PLURAL, null, "tendremos");
-      verb.addInflectedForm(Tense.FUTURE, Person.SECOND, Number.PLURAL, null, "tendréis");
-      verb.addInflectedForm(Tense.FUTURE, Person.THIRD, Number.PLURAL, null, "tendrán");
-      infinitive2flections.put(verb.getInfinitive(), verb);
+//      Flections verb = new Flections("tener");
+//      verb.addInflectedForm(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, "tengo");
+//      verb.addInflectedForm(Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, "tienes");
+//      verb.addInflectedForm(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, "tiene");
+//      verb.addInflectedForm(Tense.PRESENT, Person.FIRST, Number.PLURAL, null, "tenemos");
+//      verb.addInflectedForm(Tense.PRESENT, Person.SECOND, Number.PLURAL, null, "tenéis");
+//      verb.addInflectedForm(Tense.PRESENT, Person.THIRD, Number.PLURAL, null, "tienen");
+//      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.FIRST, Number.SINGULAR, null, "tuve");
+//      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.SECOND, Number.SINGULAR, null, "tuviste");
+//      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.THIRD, Number.SINGULAR, null, "tuvo");
+//      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.FIRST, Number.PLURAL, null, "tuvimos");
+//      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.SECOND, Number.PLURAL, null, "tuvisteis");
+//      verb.addInflectedForm(Tense.SIMPLE_PAST, Person.THIRD, Number.PLURAL, null, "tuvieron");
+//      verb.addInflectedForm(Tense.IMPERFECT, Person.FIRST, Number.SINGULAR, null, "tenía");
+//      verb.addInflectedForm(Tense.IMPERFECT, Person.SECOND, Number.SINGULAR, null, "tenías");
+//      verb.addInflectedForm(Tense.IMPERFECT, Person.THIRD, Number.SINGULAR, null, "tenía");
+//      verb.addInflectedForm(Tense.IMPERFECT, Person.FIRST, Number.PLURAL, null, "teníamos");
+//      verb.addInflectedForm(Tense.IMPERFECT, Person.SECOND, Number.PLURAL, null, "teníais");
+//      verb.addInflectedForm(Tense.IMPERFECT, Person.THIRD, Number.PLURAL, null, "tenían");
+//      verb.addInflectedForm(Tense.FUTURE, Person.FIRST, Number.SINGULAR, null, "tendré");
+//      verb.addInflectedForm(Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, "tendrás");
+//      verb.addInflectedForm(Tense.FUTURE, Person.THIRD, Number.SINGULAR, null, "tendrá");
+//      verb.addInflectedForm(Tense.FUTURE, Person.FIRST, Number.PLURAL, null, "tendremos");
+//      verb.addInflectedForm(Tense.FUTURE, Person.SECOND, Number.PLURAL, null, "tendréis");
+//      verb.addInflectedForm(Tense.FUTURE, Person.THIRD, Number.PLURAL, null, "tendrán");
+//      infinitive2flections.put(verb.getInfinitive(), verb);
     }
   }
 }
