@@ -70,4 +70,7 @@ public class DBConnector extends SQLiteOpenHelper {
 
    }
 
+   // public Uri getUriForTable(String tableName) {
+   // return "content://" +
+   // }
 }

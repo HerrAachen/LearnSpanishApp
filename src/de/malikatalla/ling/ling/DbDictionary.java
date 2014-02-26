@@ -48,4 +48,8 @@ public class DbDictionary implements Dictionary {
       return verbs;
    }
 
+   // public CursorLoader getAllVerbsCursor(Context context) {
+   // CursorLoader loader = new CursorLoader(context);
+   // loader.setUri(con.getUriForTable(VerbTable.TABLE_NAME));
+   // }
 }
