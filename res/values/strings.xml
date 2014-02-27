@@ -9,5 +9,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="show_conjugation">Show Conjugation</string>
     <string name="title_activity_show_verbs">ShowVerbsActivity</string>
+    <string name="loading">Loading..</string>
 
 </resources>

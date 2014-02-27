@@ -10,11 +10,8 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import de.malikatalla.ling.ling.Dictionary;
 
 public class ShowVerbsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<String>> {
@@ -25,10 +22,10 @@ public class ShowVerbsActivity extends FragmentActivity implements LoaderManager
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_show_verbs);
-      adapter = new VerbListAdapter(getContext());
-      ListView v = (ListView) findViewById(R.id.verbListView);
-      v.setAdapter(adapter);
+      setContentView(R.layout.loading_fragment);
+      adapter = new ArrayAdapter<String>(getContext(), R.layout.list_view_item);
+      // ListView v = (ListView) findViewById(R.id.verbListView);
+      // v.setAdapter(adapter);
       getSupportLoaderManager().initLoader(0, null, this);
    }
 
@@ -43,105 +40,6 @@ public class ShowVerbsActivity extends FragmentActivity implements LoaderManager
       return this;
    }
 
-   private class VerbListAdapter extends ArrayAdapter<String> {
-
-      public VerbListAdapter(Context context) {
-         super(context, 0);
-      }
-
-      @Override
-      public View getView(int pos, View convertView, ViewGroup arg2) {
-         TextView view;
-         if (convertView == null || convertView instanceof TextView) {
-            view = new TextView(getContext());
-         } else {
-            view = (TextView) convertView;
-         }
-         String item = getItem(pos);
-         view.setText(item);
-         return view;
-      }
-   }
-
-   // private class ListDbAdapter implements ListAdapter {
-   //
-   // List<String> verbs;
-   //
-   // public ListDbAdapter(Dictionary d) {
-   // verbs = d.getAllVerbs();
-   // }
-   //
-   // @Override
-   // public int getCount() {
-   // return verbs.size();
-   // }
-   //
-   // @Override
-   // public Object getItem(int arg0) {
-   // return verbs.get(arg0);
-   // }
-   //
-   // @Override
-   // public long getItemId(int arg0) {
-   // // TODO Auto-generated method stub
-   // return 0;
-   // }
-   //
-   // @Override
-   // public int getItemViewType(int arg0) {
-   // return 0;
-   // }
-   //
-   // @Override
-   // public View getView(int pos, View convertView, ViewGroup arg2) {
-   // String verb = verbs.get(pos);
-   // if (convertView != null && convertView instanceof TextView) {
-   // ((TextView) convertView).setText(verb);
-   // return convertView;
-   // } else {
-   // TextView v = new TextView(getContext());
-   // v.setText(verb);
-   // return v;
-   // }
-   // }
-   //
-   // @Override
-   // public int getViewTypeCount() {
-   // return 1;
-   // }
-   //
-   // @Override
-   // public boolean hasStableIds() {
-   // // TODO Auto-generated method stub
-   // return true;
-   // }
-   //
-   // @Override
-   // public boolean isEmpty() {
-   // return verbs == null || verbs.size() == 0;
-   // }
-   //
-   // @Override
-   // public void registerDataSetObserver(DataSetObserver arg0) {
-   //
-   // }
-   //
-   // @Override
-   // public void unregisterDataSetObserver(DataSetObserver arg0) {
-   //
-   // }
-   //
-   // @Override
-   // public boolean areAllItemsEnabled() {
-   // return true;
-   // }
-   //
-   // @Override
-   // public boolean isEnabled(int arg0) {
-   // return true;
-   // }
-   // }
-
    @Override
    public Loader<List<String>> onCreateLoader(int arg0, Bundle arg1) {
       Log.i("Test", "onCreateLoader");
@@ -155,6 +53,9 @@ public class ShowVerbsActivity extends FragmentActivity implements LoaderManager
       for (String s : arg1) {
          adapter.add(s);
       }
+      setContentView(R.layout.activity_show_verbs);
+      ListView v = (ListView) findViewById(R.id.verbListView);
+      v.setAdapter(adapter);
    }
 
    @Override
