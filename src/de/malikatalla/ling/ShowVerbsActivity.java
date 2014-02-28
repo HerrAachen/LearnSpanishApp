@@ -3,6 +3,7 @@ package de.malikatalla.ling;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -10,12 +11,17 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import de.malikatalla.ling.ling.Dictionary;
 
 public class ShowVerbsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<String>> {
 
+   static final String          VERB       = "VERB";
    private Dictionary           dictionary = Global.getDictionary();
    private ArrayAdapter<String> adapter;
 
@@ -56,6 +62,17 @@ public class ShowVerbsActivity extends FragmentActivity implements LoaderManager
       setContentView(R.layout.activity_show_verbs);
       ListView v = (ListView) findViewById(R.id.verbListView);
       v.setAdapter(adapter);
+      v.setOnItemClickListener(new OnItemClickListener() {
+
+         @Override
+         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            String verb = (String) ((TextView) arg1).getText();
+            Log.i("Test", "Clicked on " + verb);
+            Intent intent = new Intent(getContext(), TenseChooserActivity.class);
+            intent.putExtra(VERB, verb);
+            startActivity(intent);
+         }
+      });
    }
 
    @Override
