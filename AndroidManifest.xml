@@ -30,5 +30,14 @@
             android:name="de.malikatalla.ling.ShowVerbsActivity"
             android:label="@string/title_activity_show_verbs" >
         </activity>
+        <activity
+            android:name="de.malikatalla.ling.TenseChooserActivity"
+            android:label="@string/title_activity_tense_chooser" >
+        </activity>
+        <activity
+            android:name="de.malikatalla.ling.ShowConjugationActivity"
+            android:label="@string/title_activity_show_conjugation" >
+        </activity>
     </application>
+
 </manifest>

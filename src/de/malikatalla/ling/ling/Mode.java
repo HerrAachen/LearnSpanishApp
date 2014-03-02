@@ -1,10 +1,10 @@
 package de.malikatalla.ling.ling;
 
-public enum Gender implements LingEnum {
-   FEMALE("F"), MALE("M");
+public enum Mode implements LingEnum {
+   INDICATIVE("IND"), SUBJUNCTIVE("SUB");
    String abbreviation;
 
-   private Gender(String abb) {
+   private Mode(String abb) {
       abbreviation = abb;
    }
 
@@ -12,5 +12,4 @@ public enum Gender implements LingEnum {
    public String getShortName() {
       return abbreviation;
    }
-
 }

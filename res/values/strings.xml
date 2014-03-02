@@ -14,5 +14,6 @@
     <string name="presentIndicative">Present Indicative</string>
     <string name="simplePastIndicative">Simple Past Indicative</string>
     <string name="tenseChooserTitle">Show conjugation for:  </string>
-    
+    <string name="title_activity_show_conjugation">ShowConjugationActivity</string>
+
 </resources>
