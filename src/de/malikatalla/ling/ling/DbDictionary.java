@@ -12,9 +12,9 @@ import de.malikatalla.ling.DBContract.ConjugationTable;
 import de.malikatalla.ling.DBContract.VerbTable;
 import de.malikatalla.ling.Global;
 
-public class DbDictionary implements Dictionary {
+public abstract class DbDictionary implements Dictionary {
 
-   private DBConnector con;
+   protected DBConnector con;
 
    public DbDictionary(Context context) {
       con = new DBConnector(context);
@@ -26,23 +26,8 @@ public class DbDictionary implements Dictionary {
    }
 
    @Override
-   public String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
-      String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
-      SQLiteDatabase db = con.getReadableDatabase();
-      Cursor res = db.query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON "
-            + VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "."
-            + ConjugationTable.COLUMN_CONJ_ID, new String[] { VerbTable.COLUMN_ROOT,
-            ConjugationTable.TABLE_NAME + "." + conjugationColumn, VerbTable.COLUMN_INFINITIVE, }, VerbTable.TABLE_NAME
-            + "." + VerbTable.COLUMN_INFINITIVE + "='" + infinitive + "'", null, null, null, null);
-      if (res.moveToNext()) {
-         String root = res.getString(0);
-         String ending = res.getString(1);
-         Log.i("Test", root + "; " + ending);
-         return root + ending;
-      }
-      return null;
-   }
-
+   public abstract String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
+   
    @Override
    public String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m) {
       // TODO Auto-generated method stub

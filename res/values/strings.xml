@@ -13,7 +13,10 @@
     <string name="title_activity_tense_chooser">TenseChooserActivity</string>
     <string name="presentIndicative">Present Indicative</string>
     <string name="simplePastIndicative">Simple Past Indicative</string>
+    <string name="imperfectIndicative">Imperfect Indicative</string>
     <string name="tenseChooserTitle">Show conjugation for:  </string>
     <string name="title_activity_show_conjugation">ShowConjugationActivity</string>
+    <string name="PresentIndicative">Present Indicative</string>
+    <string name="SimplePastIndicative">Simple Past Indicative</string>
 
 </resources>

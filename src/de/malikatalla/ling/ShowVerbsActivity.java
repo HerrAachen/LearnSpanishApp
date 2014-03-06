@@ -30,8 +30,6 @@ public class ShowVerbsActivity extends FragmentActivity implements LoaderManager
       super.onCreate(savedInstanceState);
       setContentView(R.layout.loading_fragment);
       adapter = new ArrayAdapter<String>(getContext(), R.layout.list_view_item);
-      // ListView v = (ListView) findViewById(R.id.verbListView);
-      // v.setAdapter(adapter);
       getSupportLoaderManager().initLoader(0, null, this);
    }
 
@@ -68,7 +66,7 @@ public class ShowVerbsActivity extends FragmentActivity implements LoaderManager
          public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
             String verb = (String) ((TextView) arg1).getText();
             Log.i("Test", "Clicked on " + verb);
-            Intent intent = new Intent(getContext(), TenseChooserActivity.class);
+            Intent intent = new Intent(getContext(), ShowConjugationActivity.class);
             intent.putExtra(VERB, verb);
             startActivity(intent);
          }
