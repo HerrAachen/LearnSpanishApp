@@ -17,10 +17,11 @@ public class Global {
 		case SPANISH:
 			dictionary = new DbDictionarySpanish(context);
 			break;
-		case GERMAN: //not yet implemented
-		default: return;
+		case GERMAN:
+			break; // not yet implemented
+		default:
+			return;
 		}
-
 		dictionary.loadDictionary();
 	}
 
