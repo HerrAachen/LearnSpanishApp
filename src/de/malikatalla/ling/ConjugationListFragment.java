@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.malikatalla.ling.ling.Dictionary;
@@ -46,9 +47,14 @@ public class ConjugationListFragment extends Fragment {
 		
 		TextView conjugationCombination = (TextView) inflate.findViewById(R.id.conjCombination);
 		conjugationCombination.setText(tense + " " + mode);
-		ListView conjList = (ListView) inflate.findViewById(R.id.conjugationListView);
-		conjList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.conjugation_list_item, conjugations
-				.toArray(new String[0])));
+		LinearLayout conjList = (LinearLayout) inflate.findViewById(R.id.conjugationListView);
+//		conjList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.conjugation_list_item, conjugations
+//				.toArray(new String[0])));
+		for(String conjugation: conjugations){
+			TextView textView = new TextView(getActivity());
+			textView.setText(conjugation);
+			conjList.addView(textView);
+		}
 		// Inflate the layout for this fragment
 		return inflate;
 	}
