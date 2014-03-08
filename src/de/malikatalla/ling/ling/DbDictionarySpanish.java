@@ -84,4 +84,42 @@ public class DbDictionarySpanish extends DbDictionary {
 		Log.i("Test", Arrays.toString(roots) + "; " + ending);
 		return roots[rootIndex] + ending;
 	}
+
+	@Override
+	public String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m) {
+		if (n==null || p == null){
+			throw new NullPointerException("getPersonalPronoun: Person and Number must not be null");
+		}
+		if (n.equals(Number.SINGULAR)){
+			switch (p){
+			case FIRST:return "yo";
+			case SECOND: return "tú"; 
+			case THIRD:
+				if (g==null){
+					return "él/ella";
+				}
+				if (g.equals(Gender.MALE)){
+					return "él";
+				} else if (g.equals(Gender.FEMALE)){
+					return "ella";
+				}
+			}
+		}
+		if (n.equals(Number.PLURAL)){
+			switch (p){
+			case FIRST:return "nosotros";
+			case SECOND: return "vosotros"; 
+			case THIRD:
+				if (g==null){
+					return "ellos/ellas";
+				}
+				if (g.equals(Gender.MALE)){
+					return "ellos";
+				} else if (g.equals(Gender.FEMALE)){
+					return "ellas";
+				}
+			}
+		}
+		return null;
+	}
 }

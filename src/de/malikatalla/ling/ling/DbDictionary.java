@@ -29,10 +29,7 @@ public abstract class DbDictionary implements Dictionary {
    public abstract String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
    
    @Override
-   public String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m) {
-      // TODO Auto-generated method stub
-      return null;
-   }
+   public abstract String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m);
 
    @Override
    public List<String> getAllVerbs() {

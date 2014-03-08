@@ -1,6 +1,5 @@
 package de.malikatalla.ling;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -8,14 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import de.malikatalla.ling.ling.Dictionary;
 import de.malikatalla.ling.ling.Mode;
-import de.malikatalla.ling.ling.Number;
-import de.malikatalla.ling.ling.Person;
 import de.malikatalla.ling.ling.Tense;
 
 public class ConjugationListFragment extends Fragment {
@@ -35,19 +29,13 @@ public class ConjugationListFragment extends Fragment {
 		Tense tense = (Tense)args.getSerializable(Tense.class.getName());
 		Mode mode= (Mode)args.getSerializable(Mode.class.getName());
 
-//		Dictionary dictionary = Global.getDictionary();
-//		List<String> conjugations = new LinkedList<String>();
-//		conjugations.add(dictionary.getInflectedForm(verb, tense, Person.FIRST, Number.SINGULAR, null, mode));
-//		conjugations.add(dictionary.getInflectedForm(verb, tense, Person.SECOND, Number.SINGULAR, null, mode));
-//		conjugations.add(dictionary.getInflectedForm(verb, tense, Person.THIRD, Number.SINGULAR, null, mode));
-//		conjugations.add(dictionary.getInflectedForm(verb, tense, Person.FIRST, Number.PLURAL, null, mode));
-//		conjugations.add(dictionary.getInflectedForm(verb, tense, Person.SECOND, Number.PLURAL, null, mode));
-//		conjugations.add(dictionary.getInflectedForm(verb, tense, Person.THIRD, Number.PLURAL, null, mode));
 		List<String> conjugations = (List<String>) args.getSerializable("conjugations");
+		List<String> pronouns = (List<String>) args.getSerializable("pronouns");
 		
 		TextView conjugationCombination = (TextView) inflate.findViewById(R.id.conjCombination);
 		conjugationCombination.setText(tense + " " + mode);
 		LinearLayout conjList = (LinearLayout) inflate.findViewById(R.id.conjugationListView);
+		LinearLayout pronounList = (LinearLayout) inflate.findViewById(R.id.pronounListView);
 //		conjList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.conjugation_list_item, conjugations
 //				.toArray(new String[0])));
 		for(String conjugation: conjugations){
@@ -55,8 +43,12 @@ public class ConjugationListFragment extends Fragment {
 			textView.setText(conjugation);
 			conjList.addView(textView);
 		}
+		for(String pronoun: pronouns){
+			TextView textView = new TextView(getActivity());
+			textView.setText(pronoun);
+			pronounList.addView(textView);
+		}
 		// Inflate the layout for this fragment
 		return inflate;
 	}
-
 }

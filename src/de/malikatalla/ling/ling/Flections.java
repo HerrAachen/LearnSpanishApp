@@ -62,8 +62,11 @@ public class Flections {
          return false;
       }
       if (f2.getGender() != null && f1.getGender() != f2.getGender()) {
-         return false;
-      }
+          return false;
+       }
+      if (f2.getMode() != null && f1.getMode() != f2.getMode()) {
+          return false;
+       }
       return true;
    }
 
