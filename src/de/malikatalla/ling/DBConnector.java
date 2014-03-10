@@ -18,6 +18,7 @@ public class DBConnector extends SQLiteOpenHelper {
    public static final String  DATABASE_NAME    = "Conjugation.db";
    private static final String COMMA            = ",";
    private Context             context;
+   private boolean FORCE_UPDATE = true;	//TODO: set to false before publishing
 
    private boolean isDataBaseExist(Context context) {
       File dbFile = context.getDatabasePath(DATABASE_NAME);
@@ -31,7 +32,7 @@ public class DBConnector extends SQLiteOpenHelper {
       super(context, DATABASE_NAME, null, DATABASE_VERSION);
       this.context = context;
       try {
-         if (!isDataBaseExist(context)) {
+         if (FORCE_UPDATE || !isDataBaseExist(context)) {
             // get database, we will override it in next steep
             // but folders containing the database are created
             SQLiteDatabase db = getWritableDatabase();

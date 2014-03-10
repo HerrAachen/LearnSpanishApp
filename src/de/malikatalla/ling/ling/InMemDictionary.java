@@ -26,8 +26,14 @@ public abstract class InMemDictionary implements Dictionary {
 		return null;
 	}
 
+	@Override
 	public String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m) {
 		return personalPronouns.getInflectedForm(t, p, n, g, m);
+	}
+	
+	@Override
+	public String getReflexivePronoun(Tense t, Person p, Number n, Gender g, Mode m) {
+		throw new UnsupportedOperationException();
 	}
 
 	public List<String> getAllVerbs() {

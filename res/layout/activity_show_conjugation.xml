@@ -54,6 +54,12 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/conditional_indicative_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/present_subjunctive_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -66,18 +72,13 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/simple_past_subjunctive_container"
+            android:id="@+id/future_subjunctive_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/past_perfect_subjunctive_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/future_subjunctive_container"
+            android:id="@+id/imperative_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </FrameLayout>

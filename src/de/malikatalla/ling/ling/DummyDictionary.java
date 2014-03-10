@@ -101,4 +101,10 @@ public class DummyDictionary extends InMemDictionary implements Dictionary {
 //      infinitive2flections.put(verb.getInfinitive(), verb);
     }
   }
+
+@Override
+public String getReflexivePronoun(Tense t, Person p, Number n, Gender g, Mode m) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

@@ -4,14 +4,16 @@ import java.util.List;
 
 public interface Dictionary {
 
-   void loadDictionary();
+	void loadDictionary();
 
-   Dictionary getAllInflectedForms(final String infinitive);
+	Dictionary getAllInflectedForms(final String infinitive);
 
-   String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
+	String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
 
-   String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m);
+	String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m);
 
-   List<String> getAllVerbs();
+	String getReflexivePronoun(Tense t, Person p, Number n, Gender g, Mode m);
+
+	List<String> getAllVerbs();
 
 }

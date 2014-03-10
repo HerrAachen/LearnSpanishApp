@@ -8,9 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import de.malikatalla.ling.DBConnector;
-import de.malikatalla.ling.DBContract.ConjugationTable;
 import de.malikatalla.ling.DBContract.VerbTable;
-import de.malikatalla.ling.Global;
 
 public abstract class DbDictionary implements Dictionary {
 
@@ -24,12 +22,6 @@ public abstract class DbDictionary implements Dictionary {
    public void loadDictionary() {
 
    }
-
-   @Override
-   public abstract String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
-   
-   @Override
-   public abstract String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m);
 
    @Override
    public List<String> getAllVerbs() {

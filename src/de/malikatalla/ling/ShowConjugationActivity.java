@@ -30,17 +30,15 @@ public class ShowConjugationActivity extends FragmentActivity {
 				allInflectedForms);
 		addFragment(intent, verb, Tense.SIMPLE_PAST, Mode.INDICATIVE, R.id.simple_past_indicative_container,
 				allInflectedForms);
+		addFragment(intent, verb, Tense.FUTURE, Mode.INDICATIVE, R.id.future_indicative_container, allInflectedForms);
+		addFragment(intent, verb, Tense.CONDITIONAL, Mode.INDICATIVE, R.id.conditional_indicative_container, allInflectedForms);
 		addFragment(intent, verb, Tense.PAST_PERFECT, Mode.INDICATIVE, R.id.past_perfect_indicative_container,
 				allInflectedForms);
-		addFragment(intent, verb, Tense.FUTURE, Mode.INDICATIVE, R.id.future_indicative_container, allInflectedForms);
 		addFragment(intent, verb, Tense.PRESENT, Mode.SUBJUNCTIVE, R.id.present_subjunctive_container, allInflectedForms);
 		addFragment(intent, verb, Tense.IMPERFECT, Mode.SUBJUNCTIVE, R.id.imperfect_subjunctive_container,
 				allInflectedForms);
-		addFragment(intent, verb, Tense.SIMPLE_PAST, Mode.SUBJUNCTIVE, R.id.simple_past_subjunctive_container,
-				allInflectedForms);
-		addFragment(intent, verb, Tense.PAST_PERFECT, Mode.SUBJUNCTIVE, R.id.past_perfect_subjunctive_container,
-				allInflectedForms);
 		addFragment(intent, verb, Tense.FUTURE, Mode.SUBJUNCTIVE, R.id.future_subjunctive_container, allInflectedForms);
+		addFragment(intent, verb, null, Mode.IMPERATIVE, R.id.imperative_container, allInflectedForms);
 	}
 
 	private void addFragment(Intent intent, String verb, Tense tense, Mode mode, int fragmentContainer,
