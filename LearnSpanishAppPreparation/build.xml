@@ -1,0 +1,29 @@
+<project name="LearnSpanishAppPreperation" default="createDB">
+
+	<property name="src" location="src" />
+	<property name="bin" location="bin" />
+	<property name="LSA_bin" location="../LearnSpanishApp/bin/classes" />
+	<property name="LSA_DB"
+		location="../LearnSpanishApp/assets/databases/Conjugation.db" />
+
+	<path id="classpath">
+		<pathelement location="${bin}" />
+		<pathelement location="${LSA_bin}" />
+		<fileset dir="libs">
+			<include name="**/*.jar" />
+		</fileset>
+		<!-- <pathelement location="libs/sqlitejdbc-v056.jar" /> -->
+	</path>
+
+	<target name="createDB" depends="compile">
+		<java classname="de.malikatalla.ling.preparation.DBCreator"
+			classpathref="classpath">
+
+		</java>
+		<copy file="Conjugation.db" toFile="${LSA_DB}" overwrite="true" />
+	</target>
+
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${bin}" />
+	</target>
+</project>
