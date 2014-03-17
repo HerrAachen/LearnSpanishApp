@@ -14,8 +14,10 @@ import de.malikatalla.ling.DBContract.ConjugationTable;
 import de.malikatalla.ling.DBContract.VerbTable;
 import de.malikatalla.ling.Global;
 
-/** This class contains all language dependent implementations for the dictionary
- * access. Language independent parts should be move to the super class */
+/**
+ * This class contains all language dependent implementations for the dictionary
+ * access. Language independent parts should be move to the super class
+ */
 public class DbDictionarySpanish extends DbDictionary {
 
   public DbDictionarySpanish(Context context) {
@@ -29,10 +31,9 @@ public class DbDictionarySpanish extends DbDictionary {
       @Override
       public void loadDictionary() {
         SQLiteDatabase db = con.getReadableDatabase();
-        Cursor res = db.query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON "
-            + VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "."
-            + ConjugationTable.COLUMN_CONJ_ID, null, VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_INFINITIVE + "='"
-            + infinitive + "'", null, null, null, null);
+        Cursor res = db.query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON " + VerbTable.TABLE_NAME
+            + "." + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "." + ConjugationTable.COLUMN_CONJ_ID,
+            null, VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_INFINITIVE + "='" + infinitive + "'", null, null, null, null);
 
         if (res.moveToNext()) {
           String roots = res.getString(res.getColumnIndex(VerbTable.COLUMN_ROOT));
@@ -52,6 +53,9 @@ public class DbDictionarySpanish extends DbDictionary {
       private String getInflectedForm(String roots, Flection flection, Cursor res, String infinitive) {
         String conjugationColumn = Global.getColumnConverter().getDBColumn(flection.getTense(), flection.getPerson(),
             flection.getNumber(), flection.getGender(), flection.getMode());
+        if (conjugationColumn == null) {
+          return null;
+        }
         int columnIndex = res.getColumnIndex(conjugationColumn);
         if (columnIndex >= 0) {
           return extractConjugation(roots, res.getString(columnIndex), flection, infinitive);
@@ -66,12 +70,16 @@ public class DbDictionarySpanish extends DbDictionary {
   @Override
   public String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
     String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
+    if (conjugationColumn == null) {
+      return null;
+    }
     SQLiteDatabase db = con.getReadableDatabase();
-    Cursor res = db.query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON "
-        + VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "."
-        + ConjugationTable.COLUMN_CONJ_ID, new String[] { VerbTable.COLUMN_ROOT,
-        ConjugationTable.TABLE_NAME + "." + conjugationColumn, VerbTable.COLUMN_INFINITIVE, }, VerbTable.TABLE_NAME
-        + "." + VerbTable.COLUMN_INFINITIVE + "='" + infinitive + "'", null, null, null, null);
+    Cursor res = db
+        .query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON " + VerbTable.TABLE_NAME + "."
+            + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "." + ConjugationTable.COLUMN_CONJ_ID,
+            new String[] { VerbTable.COLUMN_ROOT, ConjugationTable.TABLE_NAME + "." + conjugationColumn,
+                VerbTable.COLUMN_INFINITIVE, }, VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_INFINITIVE + "='" + infinitive
+                + "'", null, null, null, null);
     if (res.moveToNext()) {
       String roots = res.getString(0);
       String ending = res.getString(1);
@@ -96,12 +104,12 @@ public class DbDictionarySpanish extends DbDictionary {
     StringBuilder resultBuilder = new StringBuilder();
 
     Iterator<String> iterator = endings.iterator();
-    while(iterator.hasNext()){
+    while (iterator.hasNext()) {
       String currentEnding = iterator.next();
-      //found an ending only valid for reflexive verbs
+      // found an ending only valid for reflexive verbs
       if (currentEnding.startsWith("r:")) {
         if (isReflexive) {
-          //leave only the current ending in the list
+          // leave only the current ending in the list
           endings = new LinkedList<String>();
           endings.add(currentEnding.substring(2));
           break;
@@ -115,8 +123,7 @@ public class DbDictionarySpanish extends DbDictionary {
       String currentEnding = endings.get(endingsIndex);
       LinkedList<Integer> rootIndices = new LinkedList<Integer>();
       while (currentEnding.matches(".*[0-9]")) {
-        rootIndices.addFirst(Integer.parseInt(currentEnding.substring(currentEnding.length() - 1,
-            currentEnding.length())) - 1);
+        rootIndices.addFirst(Integer.parseInt(currentEnding.substring(currentEnding.length() - 1, currentEnding.length())) - 1);
         currentEnding = currentEnding.substring(0, currentEnding.length() - 1);
       }
       int rootIndex = 0;
@@ -135,16 +142,17 @@ public class DbDictionarySpanish extends DbDictionary {
       if (isReflexive) {
         if (isImperative) {
           currentConjugation = currentConjugation
-              + getReflexivePronoun(flection.getTense(), flection.getPerson(), flection.getNumber(),
-                  flection.getGender(), flection.getMode());
+              + getReflexivePronoun(flection.getTense(), flection.getPerson(), flection.getNumber(), flection.getGender(),
+                  flection.getMode());
 
         } else {
           currentConjugation = getReflexivePronoun(flection.getTense(), flection.getPerson(), flection.getNumber(),
-              flection.getGender(), flection.getMode()) + " " + currentConjugation;
+              flection.getGender(), flection.getMode())
+              + " " + currentConjugation;
         }
       }
       resultBuilder.append(currentConjugation);
-      if (endingsIndex < endings.size()- 1) {
+      if (endingsIndex < endings.size() - 1) {
         resultBuilder.append("/");
       }
     }

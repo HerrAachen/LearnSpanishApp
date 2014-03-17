@@ -40,7 +40,7 @@ public class DBCreator {
 
    public static void main(String[] args) throws ClassNotFoundException, SQLException, ParserConfigurationException, SAXException, IOException {
       Map<String, ConjugationDescription> conjugations = WictionaryConjugationExtractor
-            .extractConjugations("InputData/eswiktionary-20140217-pages-meta-current.xml");
+            .extractConjugations("InputData/eswiktionary-20140305-pages-meta-current.xml");
       createDatabase(conjugations);
    }
 

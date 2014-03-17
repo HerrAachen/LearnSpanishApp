@@ -16,6 +16,9 @@ public class ColumnConverterSpanish implements ColumnConverter {
 
 	@Override
 	public String getDBColumn(Tense t, Person p, Number n, Gender g, Mode m) {
+		if (n==null || p == null || m == null || t == null){
+			return null;
+		}
 		StringBuilder builder = new StringBuilder();
 		builder.append(n.getShortName()).append("_").append(p.getShortName()).append("_").append(m.getShortName())
 				.append("_").append(t!=null?t.getShortName():"NUL");
