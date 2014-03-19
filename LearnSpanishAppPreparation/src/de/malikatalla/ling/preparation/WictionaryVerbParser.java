@@ -20,7 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class WictionaryVerbParser {
 
    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-      extractVerbs("/home/gabi/Documents/Maliks/eswiktionary-20140130-pages-meta-current.xml");
+      extractVerbs("InputData/eswiktionary-20140305-pages-meta-current.xml");
    }
 
    public static Map<String, String> extractVerbs(String pathToWictionaryExport) throws ParserConfigurationException, SAXException, IOException {
@@ -64,8 +64,8 @@ public class WictionaryVerbParser {
          if (qName.equals(PAGE)) {
             inPage = false;
             if (inVerb) {
-               if (text.toString().contains("{{ES|" + title + "}}")) {
-                  // System.out.println("\n === TITLE:" + title + " ===");
+               if (text.toString().contains("{{ES|" + title)) {
+//                   System.out.println("\n === TITLE:" + title + " ===");
                   title2Text.put(title, text.toString());
                }
                // System.out.println("TEXT:" + text.toString());

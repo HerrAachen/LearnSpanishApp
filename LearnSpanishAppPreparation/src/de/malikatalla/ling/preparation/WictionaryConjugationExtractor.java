@@ -29,14 +29,17 @@ public class WictionaryConjugationExtractor {
       Map<String, ConjugationDescription> inf2conj = new HashMap<String, ConjugationDescription>();
       FrequencyMap<String> basicConjugs = new FrequencyMap<>();
       for (Map.Entry<String, String> entry : title2article.entrySet()) {
+        System.out.print(entry.getKey() + " -> ");
          String conjugationDescriptionString = extractConjugationFromWikiArticle(entry.getValue());
          if (conjugationDescriptionString != null) {
             ConjugationDescription desc = parseConjugationDescription(conjugationDescriptionString);
-            System.out.println(entry.getKey() + " -> " + conjugationDescriptionString + " " + desc.getBasicConjugation() + " " + desc.getRoot());
+            System.out.println(conjugationDescriptionString + " " + desc.getBasicConjugation() + " " + desc.getRoot());
             if (desc != null && desc.getBasicConjugation().contains(conjugationES)) {
                inf2conj.put(entry.getKey(), desc);
                basicConjugs.increment(desc.getBasicConjugation());
             }
+         } else {
+           System.out.println("NULL");
          }
       }
       System.out.println("Number of basic conjugations:" + basicConjugs.size());

@@ -16,8 +16,11 @@ public class ColumnConverterSpanish implements ColumnConverter {
 
 	@Override
 	public String getDBColumn(Tense t, Person p, Number n, Gender g, Mode m) {
-		if (n==null || p == null || m == null || t == null){
+		if (n==null || p == null || m == null){
 			return null;
+		}
+		if (m.equals(Mode.IMPERATIVE)){
+		  t = null;
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append(n.getShortName()).append("_").append(p.getShortName()).append("_").append(m.getShortName())

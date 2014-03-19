@@ -70,6 +70,7 @@ public class DbDictionarySpanish extends DbDictionary {
   @Override
   public String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
     String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
+    Log.i(Global.DEBUG, "column: " + conjugationColumn);
     if (conjugationColumn == null) {
       return null;
     }
@@ -83,6 +84,7 @@ public class DbDictionarySpanish extends DbDictionary {
     if (res.moveToNext()) {
       String roots = res.getString(0);
       String ending = res.getString(1);
+//      Log.i(Global.DEBUG, roots + " " + ending);
       return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive);
     }
     return null;
@@ -128,7 +130,7 @@ public class DbDictionarySpanish extends DbDictionary {
       }
       int rootIndex = 0;
       if (!rootIndices.isEmpty()) {
-        if (isReflexive) {
+        if (isReflexive && rootIndices.size()>=2) {
           rootIndex = rootIndices.get(1);
         } else {
           rootIndex = rootIndices.get(0);

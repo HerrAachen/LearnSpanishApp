@@ -7,38 +7,40 @@ import de.malikatalla.ling.ling.Language;
 
 public class Global {
 
-	private static Dictionary dictionary;
+  public static final String DEBUG = "Test";
 
-	private static final Language VERB_LANGUAGE = Language.SPANISH;
-	private static final ColumnConverter columnConverter = determineColumnConverter();
+  private static Dictionary dictionary;
 
-	public static void init(Context context) {
-		switch (VERB_LANGUAGE) {
-		case SPANISH:
-			dictionary = new DbDictionarySpanish(context);
-			break;
-		case GERMAN:
-			break; // not yet implemented
-		default:
-			return;
-		}
-		dictionary.loadDictionary();
-	}
+  private static final Language VERB_LANGUAGE = Language.SPANISH;
+  private static final ColumnConverter columnConverter = determineColumnConverter();
 
-	public static Dictionary getDictionary() {
-		return dictionary;
-	}
+  public static void init(Context context) {
+    switch (VERB_LANGUAGE) {
+    case SPANISH:
+      dictionary = new DbDictionarySpanish(context);
+      break;
+    case GERMAN:
+      break; // not yet implemented
+    default:
+      return;
+    }
+    dictionary.loadDictionary();
+  }
 
-	private static ColumnConverter determineColumnConverter() {
-		switch (VERB_LANGUAGE) {
-		case SPANISH:
-			return new ColumnConverterSpanish();
-		default:
-			return null;
-		}
-	}
+  public static Dictionary getDictionary() {
+    return dictionary;
+  }
 
-	public static ColumnConverter getColumnConverter() {
-		return columnConverter;
-	}
+  private static ColumnConverter determineColumnConverter() {
+    switch (VERB_LANGUAGE) {
+    case SPANISH:
+      return new ColumnConverterSpanish();
+    default:
+      return null;
+    }
+  }
+
+  public static ColumnConverter getColumnConverter() {
+    return columnConverter;
+  }
 }
