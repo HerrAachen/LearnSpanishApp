@@ -12,7 +12,6 @@ public class Global {
   private static Dictionary dictionary;
 
   private static final Language VERB_LANGUAGE = Language.SPANISH;
-  private static final ColumnConverter columnConverter = determineColumnConverter();
 
   public static void init(Context context) {
     switch (VERB_LANGUAGE) {
@@ -31,16 +30,4 @@ public class Global {
     return dictionary;
   }
 
-  private static ColumnConverter determineColumnConverter() {
-    switch (VERB_LANGUAGE) {
-    case SPANISH:
-      return new ColumnConverterSpanish();
-    default:
-      return null;
-    }
-  }
-
-  public static ColumnConverter getColumnConverter() {
-    return columnConverter;
-  }
 }

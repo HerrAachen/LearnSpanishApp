@@ -1,11 +1,14 @@
-package de.malikatalla.ling;
+package de.malikatalla.ling.gui;
 
+import de.malikatalla.ling.R;
+import de.malikatalla.ling.R.layout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/** Is shown when user has to wait */
 public class LoadingScreenFragment extends Fragment {
 
    @Override

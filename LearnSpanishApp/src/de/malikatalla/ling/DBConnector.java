@@ -41,9 +41,9 @@ public class DBConnector extends SQLiteOpenHelper {
             copyDataBase();
          }
       } catch (SQLException eSQL) {
-         Log.e("TEST", "Cannot open database");
+         Log.e(Global.DEBUG, "Cannot open database");
       } catch (IOException IOe) {
-         Log.e("TEST", "Can not copy initial database");
+         Log.e(Global.DEBUG, "Cannot copy initial database");
       }
 
    }

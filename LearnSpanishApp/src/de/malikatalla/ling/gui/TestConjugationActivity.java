@@ -1,7 +1,12 @@
-package de.malikatalla.ling;
+package de.malikatalla.ling.gui;
 
 import java.util.List;
 
+import de.malikatalla.ling.Global;
+import de.malikatalla.ling.R;
+import de.malikatalla.ling.R.id;
+import de.malikatalla.ling.R.layout;
+import de.malikatalla.ling.R.menu;
 import de.malikatalla.ling.ling.Dictionary;
 import de.malikatalla.ling.ling.InMemDictionary;
 import de.malikatalla.ling.ling.Flection;
@@ -30,7 +35,7 @@ public class TestConjugationActivity extends Activity {
 		e.setOnEditorActionListener(new PressEnterListener());
 		TextView t=(TextView)findViewById(R.id.test_text);
 		currentVerb = verbs.get(0);
-		Log.i("TEST", currentVerb);
+		Log.i(Global.DEBUG, currentVerb);
 		t.setText(currentVerb);
 		
 	}

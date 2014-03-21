@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="de.malikatalla.ling.MainActivity"
+            android:name="de.malikatalla.ling.gui.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.malikatalla.ling.TestConjugationActivity"
+            android:name="de.malikatalla.ling.gui.TestConjugationActivity"
             android:label="@string/title_activity_test_conjugation" >
         </activity>
         <activity
-            android:name="de.malikatalla.ling.ShowVerbsActivity"
+            android:name="de.malikatalla.ling.gui.ShowVerbsActivity"
             android:label="@string/title_activity_show_verbs" >
         </activity>
         <activity
-            android:name="de.malikatalla.ling.TenseChooserActivity"
+            android:name="de.malikatalla.ling.gui.TenseChooserActivity"
             android:label="@string/title_activity_tense_chooser" >
         </activity>
         <activity
-            android:name="de.malikatalla.ling.ShowConjugationActivity"
+            android:name="de.malikatalla.ling.gui.ShowConjugationActivity"
             android:label="@string/title_activity_show_conjugation" >
         </activity>
     </application>

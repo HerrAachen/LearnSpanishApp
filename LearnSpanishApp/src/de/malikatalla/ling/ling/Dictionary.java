@@ -2,6 +2,7 @@ package de.malikatalla.ling.ling;
 
 import java.util.List;
 
+/** Provides access to the verbs and their conjugations */
 public interface Dictionary {
 
 	void loadDictionary();

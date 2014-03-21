@@ -22,13 +22,14 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import de.malikatalla.ling.ColumnConverter;
 import de.malikatalla.ling.DBConnector;
 import de.malikatalla.ling.DBContract.ConjugationTable;
 import de.malikatalla.ling.DBContract.VerbTable;
 import de.malikatalla.ling.Global;
+import de.malikatalla.ling.ling.DbDictionary;
 import de.malikatalla.ling.ling.Flection;
 
+/** Takes a wiktionary dump as input and creates the database for the android app from it */
 public class DBCreator {
 
   private static final File ENDINGS_FILE = new File("InputData/conjugations.txt");
@@ -46,8 +47,8 @@ public class DBCreator {
     Connection conn = DriverManager.getConnection("jdbc:sqlite:" + DBConnector.DATABASE_NAME);
     conn.setAutoCommit(false);
     Statement stat = conn.createStatement();
-    // create tables
-    ColumnConverter cc = Global.getColumnConverter();
+    // create tables (fair assumption that Database dictionary is used)
+    DbDictionary dict = (DbDictionary) Global.getDictionary();
     stat.executeUpdate("drop table if exists " + ConjugationTable.TABLE_NAME);
 
     // Order of the columns matters! Same as in conjugations text file
@@ -55,37 +56,11 @@ public class DBCreator {
     StringBuilder sql = new StringBuilder();
     sql.append("create table " + ConjugationTable.TABLE_NAME + " (" + ConjugationTable.COLUMN_CONJ_ID + " INTEGER PRIMARY KEY"
         + COMMA + ConjugationTable.COLUMN_CONJ_DESC + " TEXT");
-    for (Flection f : cc.flectionIterator()) {
-      addColumn(cc.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
+    for (Flection f : dict.flectionIterator()) {
+      addColumn(dict.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
     }
     sql.append(")");
     stat.executeUpdate(sql.toString());
-    // stat.executeUpdate("create table " + ConjugationTable.TABLE_NAME + " (" +
-    // ConjugationTable.COLUMN_CONJ_ID + " INTEGER PRIMARY KEY" + COMMA
-    // + ConjugationTable.COLUMN_CONJ_DESC + " TEXT" + COMMA +
-    // cc.getDBColumn(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null,
-    // Mode.INDICATIVE)
-    // + " TEXT" + COMMA + cc.getDBColumn(Tense.PRESENT, Person.SECOND,
-    // Number.SINGULAR, null, Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.PRESENT, Person.FIRST, Number.PLURAL, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.PRESENT, Person.SECOND, Number.PLURAL, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.PRESENT, Person.THIRD, Number.PLURAL, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA + cc.getDBColumn(Tense.IMPERFECT,
-    // Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE)
-    // + " TEXT" + COMMA + cc.getDBColumn(Tense.IMPERFECT, Person.SECOND,
-    // Number.SINGULAR, null, Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.IMPERFECT, Person.THIRD, Number.SINGULAR, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.IMPERFECT, Person.FIRST, Number.PLURAL, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.IMPERFECT, Person.SECOND, Number.PLURAL, null,
-    // Mode.INDICATIVE) + " TEXT" + COMMA
-    // + cc.getDBColumn(Tense.IMPERFECT, Person.THIRD, Number.PLURAL, null,
-    // Mode.INDICATIVE) + " TEXT" + ")");
     stat.executeUpdate("drop table if exists " + VerbTable.TABLE_NAME);
     stat.executeUpdate("create table " + VerbTable.TABLE_NAME + " (" + VerbTable.COLUMN_INFINITIVE + " TEXT" + COMMA
         + VerbTable.COLUMN_ROOT + " TEXT" + COMMA + VerbTable.COLUMN_CONJUGATION + " INTEGER" + ")");
@@ -104,7 +79,7 @@ public class DBCreator {
     // read conjugations from file and put them to db table
     Map<String, List<String>> conj2endings = readConjugationsFile(ENDINGS_FILE);
     System.out.println("Creating conjugation table");
-    int ENDINGS_COUNT = cc.flectionIterator().size();
+    int ENDINGS_COUNT = dict.flectionIterator().size();
     StringBuilder insertStatement = new StringBuilder();
     insertStatement.append("insert into " + ConjugationTable.TABLE_NAME + " values (");
     for (int j = 0; j < ENDINGS_COUNT + 2; j++) {

@@ -20,6 +20,8 @@ import de.malikatalla.ling.Global;
  */
 public class DbDictionarySpanish extends DbDictionary {
 
+  private List<Flection> allFlections = null;
+
   public DbDictionarySpanish(Context context) {
     super(context);
   }
@@ -39,19 +41,19 @@ public class DbDictionarySpanish extends DbDictionary {
           String roots = res.getString(res.getColumnIndex(VerbTable.COLUMN_ROOT));
           String infinitive = res.getString(res.getColumnIndex(VerbTable.COLUMN_INFINITIVE));
           Flections flections = new Flections(infinitive);
-          for (Flection flection : Global.getColumnConverter().flectionIterator()) {
+          for (Flection flection : flectionIterator()) {
             String inflection = getInflectedForm(roots, flection, res, infinitive);
             if (inflection != null) {
               flections.addInflectedForm(flection, inflection);
             }
           }
           infinitive2flections.put(infinitive, flections);
-          Log.i("Test", "putting " + infinitive + " in mem dict");
+          Log.i(Global.DEBUG, "putting " + infinitive + " in mem dict");
         }
       }
 
       private String getInflectedForm(String roots, Flection flection, Cursor res, String infinitive) {
-        String conjugationColumn = Global.getColumnConverter().getDBColumn(flection.getTense(), flection.getPerson(),
+        String conjugationColumn = getDBColumn(flection.getTense(), flection.getPerson(),
             flection.getNumber(), flection.getGender(), flection.getMode());
         if (conjugationColumn == null) {
           return null;
@@ -69,7 +71,7 @@ public class DbDictionarySpanish extends DbDictionary {
 
   @Override
   public String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
-    String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
+    String conjugationColumn = getDBColumn(t, p, n, g, m);
     Log.i(Global.DEBUG, "column: " + conjugationColumn);
     if (conjugationColumn == null) {
       return null;
@@ -84,7 +86,7 @@ public class DbDictionarySpanish extends DbDictionary {
     if (res.moveToNext()) {
       String roots = res.getString(0);
       String ending = res.getString(1);
-//      Log.i(Global.DEBUG, roots + " " + ending);
+      // Log.i(Global.DEBUG, roots + " " + ending);
       return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive);
     }
     return null;
@@ -101,8 +103,8 @@ public class DbDictionarySpanish extends DbDictionary {
     boolean isReflexive = infinitive.endsWith("se");
     List<String> endings = new ArrayList<String>();
     endings.addAll(Arrays.asList(ending.split(";")));
-    Log.i("Test", Arrays.toString(roots));
-    Log.i("Test", endings.toString());
+    Log.i(Global.DEBUG, Arrays.toString(roots));
+    Log.i(Global.DEBUG, endings.toString());
     StringBuilder resultBuilder = new StringBuilder();
 
     Iterator<String> iterator = endings.iterator();
@@ -120,7 +122,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
       }
     }
-    Log.i("Test", endings.toString());
+    Log.i(Global.DEBUG, endings.toString());
     for (int endingsIndex = 0; endingsIndex < endings.size(); endingsIndex++) {
       String currentEnding = endings.get(endingsIndex);
       LinkedList<Integer> rootIndices = new LinkedList<Integer>();
@@ -130,7 +132,7 @@ public class DbDictionarySpanish extends DbDictionary {
       }
       int rootIndex = 0;
       if (!rootIndices.isEmpty()) {
-        if (isReflexive && rootIndices.size()>=2) {
+        if (isReflexive && rootIndices.size() >= 2) {
           rootIndex = rootIndices.get(1);
         } else {
           rootIndex = rootIndices.get(0);
@@ -230,4 +232,79 @@ public class DbDictionarySpanish extends DbDictionary {
     }
     return null;
   }
+
+  @Override
+  public String getDBColumn(Tense t, Person p, Number n, Gender g, Mode m) {
+    if (n == null || p == null || m == null) {
+      return null;
+    }
+    if (m.equals(Mode.IMPERATIVE)) {
+      t = null;
+    }
+    StringBuilder builder = new StringBuilder();
+    builder.append(n.getShortName()).append("_").append(p.getShortName()).append("_").append(m.getShortName()).append("_")
+        .append(t != null ? t.getShortName() : "NUL");
+    return builder.toString();
+  }
+
+  public List<Flection> flectionIterator() {
+    if (allFlections == null) {
+      allFlections = new LinkedList<Flection>();
+      allFlections.add(new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.PRESENT, Person.THIRD, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.FIRST, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.SECOND, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.THIRD, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.FIRST, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.SECOND, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.IMPERFECT, Person.THIRD, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.FIRST, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.THIRD, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.FIRST, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.SECOND, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(Tense.FUTURE, Person.THIRD, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(null, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.THIRD, Number.SINGULAR, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.THIRD, Number.PLURAL, null, Mode.IMPERATIVE));
+    }
+    return allFlections;
+  }
+
 }

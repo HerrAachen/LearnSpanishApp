@@ -1,4 +1,4 @@
-package de.malikatalla.ling;
+package de.malikatalla.ling.gui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import de.malikatalla.ling.R;
+import de.malikatalla.ling.R.id;
+import de.malikatalla.ling.R.layout;
+import de.malikatalla.ling.R.menu;
 import de.malikatalla.ling.ling.Mode;
 import de.malikatalla.ling.ling.Tense;
 

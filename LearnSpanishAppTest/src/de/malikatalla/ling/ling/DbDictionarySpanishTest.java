@@ -3,7 +3,7 @@ package de.malikatalla.ling.ling;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.malikatalla.ling.MainActivity;
+import de.malikatalla.ling.gui.MainActivity;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
@@ -66,5 +66,11 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("acalorémonos", d.getInflectedForm("acalorarse", Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
     assertEquals("acalorad", d.getInflectedForm("acalorar", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
     assertEquals("acaloraos", d.getInflectedForm("acalorarse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
+  }
+  
+
+  @Test
+  public void testIndicativePastPerfect() {
+    assertEquals("", d.getInflectedForm("esperar", Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
 }
