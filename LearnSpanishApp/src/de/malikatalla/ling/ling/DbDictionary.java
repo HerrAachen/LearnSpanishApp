@@ -34,17 +34,4 @@ public abstract class DbDictionary implements Dictionary {
     }
     return verbs;
   }
-  
-  /**
-   * 
-   * @param t
-   * @param p
-   * @param n
-   * @param g
-   * @param m
-   * @return the string denoting the database column where the conjugation for this combination is stored
-   */
-  public abstract String getDBColumn(Tense t, Person p, Number n, Gender g, Mode m);
-  
-  public abstract List<Flection> flectionIterator();
 }

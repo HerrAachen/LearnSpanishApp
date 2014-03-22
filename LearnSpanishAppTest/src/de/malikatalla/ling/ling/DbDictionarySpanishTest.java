@@ -71,6 +71,6 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
 
   @Test
   public void testIndicativePastPerfect() {
-    assertEquals("", d.getInflectedForm("esperar", Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("he esperado", d.getInflectedForm("esperar", Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
 }

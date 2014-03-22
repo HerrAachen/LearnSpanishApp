@@ -26,7 +26,7 @@ import de.malikatalla.ling.DBConnector;
 import de.malikatalla.ling.DBContract.ConjugationTable;
 import de.malikatalla.ling.DBContract.VerbTable;
 import de.malikatalla.ling.Global;
-import de.malikatalla.ling.ling.DbDictionary;
+import de.malikatalla.ling.ling.ColumnConverter;
 import de.malikatalla.ling.ling.Flection;
 
 /** Takes a wiktionary dump as input and creates the database for the android app from it */
@@ -37,6 +37,7 @@ public class DBCreator {
 
   public static void main(String[] args) throws ClassNotFoundException, SQLException, ParserConfigurationException, SAXException,
       IOException {
+    Global.init();
     Map<String, ConjugationDescription> conjugations = WictionaryConjugationExtractor
         .extractConjugations("InputData/eswiktionary-20140305-pages-meta-current.xml");
     createDatabase(conjugations);
@@ -48,7 +49,7 @@ public class DBCreator {
     conn.setAutoCommit(false);
     Statement stat = conn.createStatement();
     // create tables (fair assumption that Database dictionary is used)
-    DbDictionary dict = (DbDictionary) Global.getDictionary();
+    ColumnConverter cc = Global.getColumnConverter();
     stat.executeUpdate("drop table if exists " + ConjugationTable.TABLE_NAME);
 
     // Order of the columns matters! Same as in conjugations text file
@@ -56,8 +57,8 @@ public class DBCreator {
     StringBuilder sql = new StringBuilder();
     sql.append("create table " + ConjugationTable.TABLE_NAME + " (" + ConjugationTable.COLUMN_CONJ_ID + " INTEGER PRIMARY KEY"
         + COMMA + ConjugationTable.COLUMN_CONJ_DESC + " TEXT");
-    for (Flection f : dict.flectionIterator()) {
-      addColumn(dict.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
+    for (Flection f : cc.flectionIterator()) {
+      addColumn(cc.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
     }
     sql.append(")");
     stat.executeUpdate(sql.toString());
@@ -79,7 +80,7 @@ public class DBCreator {
     // read conjugations from file and put them to db table
     Map<String, List<String>> conj2endings = readConjugationsFile(ENDINGS_FILE);
     System.out.println("Creating conjugation table");
-    int ENDINGS_COUNT = dict.flectionIterator().size();
+    int ENDINGS_COUNT = cc.flectionIterator().size();
     StringBuilder insertStatement = new StringBuilder();
     insertStatement.append("insert into " + ConjugationTable.TABLE_NAME + " values (");
     for (int j = 0; j < ENDINGS_COUNT + 2; j++) {
