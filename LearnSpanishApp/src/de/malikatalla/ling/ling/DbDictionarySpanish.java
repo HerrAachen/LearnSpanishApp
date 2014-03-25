@@ -75,7 +75,7 @@ public class DbDictionarySpanish extends DbDictionary {
       return auxiliary + " " + participle;
     }
     String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
-    Log.i(Global.DEBUG, "column: " + conjugationColumn);
+//    Log.i(Global.DEBUG, "column: " + conjugationColumn);
     if (conjugationColumn == null) {
       return null;
     }
@@ -127,8 +127,8 @@ public class DbDictionarySpanish extends DbDictionary {
     boolean isReflexive = infinitive.endsWith("se");
     List<String> endings = new ArrayList<String>();
     endings.addAll(Arrays.asList(ending.split(";")));
-    Log.i(Global.DEBUG, Arrays.toString(roots));
-    Log.i(Global.DEBUG, endings.toString());
+//    Log.i(Global.DEBUG, Arrays.toString(roots));
+//    Log.i(Global.DEBUG, endings.toString());
     StringBuilder resultBuilder = new StringBuilder();
 
     Iterator<String> iterator = endings.iterator();
@@ -146,7 +146,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
       }
     }
-    Log.i(Global.DEBUG, endings.toString());
+//    Log.i(Global.DEBUG, endings.toString());
     for (int endingsIndex = 0; endingsIndex < endings.size(); endingsIndex++) {
       String currentEnding = endings.get(endingsIndex);
       LinkedList<Integer> rootIndices = new LinkedList<Integer>();
@@ -231,8 +231,11 @@ public class DbDictionarySpanish extends DbDictionary {
 
   @Override
   public String getReflexivePronoun(Tense t, Person p, Number n, Gender g, Mode m) {
+    if (m.equals(Mode.PARTICIPLE)){
+      return "";
+    }
     if (n == null || p == null) {
-      throw new NullPointerException("getReflexivePronoun: Person and Number must not be null");
+      throw new NullPointerException("getReflexivePronoun: Person and Number must not be null:" + new Flection(t, p, n, g, m).toString());
     }
     if (n.equals(Number.SINGULAR)) {
       switch (p) {

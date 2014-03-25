@@ -16,10 +16,10 @@ public class Global {
 
   private static final Language VERB_LANGUAGE = Language.SPANISH;
 
-  public static void init(){
+  public static void init() {
     init(null);
   }
-  
+
   public static void init(Context context) {
     switch (VERB_LANGUAGE) {
     case SPANISH:
@@ -33,14 +33,16 @@ public class Global {
     default:
       return;
     }
-    dictionary.loadDictionary();
+    if (dictionary != null) {
+      dictionary.loadDictionary();
+    }
   }
 
   public static Dictionary getDictionary() {
     return dictionary;
   }
-  
-  public static ColumnConverter getColumnConverter(){
+
+  public static ColumnConverter getColumnConverter() {
     return columnConverter;
   }
 

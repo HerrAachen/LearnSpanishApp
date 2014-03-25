@@ -15,6 +15,8 @@ public interface ColumnConverter {
    *         this combination is stored
    */
   String getDBColumn(Tense t, Person p, Number n, Gender g, Mode m);
+  
+  Flection parseDBColumn(String input);
 
   List<Flection> flectionIterator();
 }

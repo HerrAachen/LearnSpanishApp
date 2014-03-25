@@ -14,7 +14,6 @@ import junit.framework.TestCase;
 
 public class FlectionsTest extends TestCase {
 
-  @Test
   public void testMatch(){
     Flection f1 = new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, Gender.MALE, Mode.INDICATIVE);
     Flection f2 = new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE);

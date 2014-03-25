@@ -125,7 +125,7 @@ public class DBCreator {
   }
 
   private static void addColumn(String dbColumn, StringBuilder sql) {
-    sql.append(COMMA).append(dbColumn).append(" TEXT");
+    sql.append(COMMA).append("\"").append(dbColumn).append("\" TEXT");
   }
 
   private static Map<String, List<String>> readConjugationsFile(File endingsFile) {
