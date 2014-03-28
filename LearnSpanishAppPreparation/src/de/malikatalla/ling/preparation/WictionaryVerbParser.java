@@ -20,7 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class WictionaryVerbParser {
 
    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-      extractVerbs("InputData/eswiktionary-20140305-pages-meta-current.xml");
+      extractVerbs(DBCreator.WIKI_DUMP);
    }
 
    public static Map<String, String> extractVerbs(String pathToWictionaryExport) throws ParserConfigurationException, SAXException, IOException {

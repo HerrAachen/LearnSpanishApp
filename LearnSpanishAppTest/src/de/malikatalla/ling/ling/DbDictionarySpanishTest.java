@@ -1,9 +1,13 @@
 package de.malikatalla.ling.ling;
 
+import java.util.List;
+
 import org.junit.Before;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
+import android.util.Log;
+import de.malikatalla.ling.Global;
 import de.malikatalla.ling.gui.MainActivity;
 
 public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> {
@@ -25,6 +29,13 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
 
     startActivity(mLaunchIntent, null, null);
     d = new DbDictionarySpanish(getActivity());
+  }
+  
+  public void testVerbs(){
+    List<String> verbs = d.getAllVerbs();
+    for(String verb: verbs){
+      assertFalse(verb.matches("\\p{Punct}"));
+    }
   }
 
   public void testIndicative() {
@@ -79,27 +90,26 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("has", d.getInflectedForm("haber", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
   }
 
-//  @Test
-//  public void testCoverage() {
-//    int total = 0;
-//    int covered = 0;
-//    int verbCount = 0;
-//    List<String> allVerbs = d.getAllVerbs();
-//    for (String verb : allVerbs) {
-//      Dictionary allInflectedForms = d.getAllInflectedForms(verb);
-//      Log.i(Global.DEBUG, ++verbCount + "/" + allVerbs.size());
-//      for (Flection f : Global.getColumnConverter().flectionIterator()) {
-//        total++;
-//        String inflectedForm = allInflectedForms.getInflectedForm(verb, f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode());
-//        if (inflectedForm != null) {
-//          covered++;
-//        }
-//      }
-//    }
-//    String message = "Coverage of inflected forms: " + covered + "/" + total + " (" + (covered * 100.0) / total + "%)";
-//    Log.i(Global.DEBUG, message);
-//    if (total != covered) {
-//      fail(message);
-//    }
-//  }
+  public void testCoverage() {
+    int total = 0;
+    int covered = 0;
+    int verbCount = 0;
+    List<String> allVerbs = d.getAllVerbs();
+    for (String verb : allVerbs) {
+      Dictionary allInflectedForms = d.getAllInflectedForms(verb);
+      Log.i(Global.DEBUG, ++verbCount + "/" + allVerbs.size());
+      for (Flection f : Global.getColumnConverter().flectionIterator()) {
+        total++;
+        String inflectedForm = allInflectedForms.getInflectedForm(verb, f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode());
+        if (inflectedForm != null) {
+          covered++;
+        }
+      }
+    }
+    String message = "Coverage of inflected forms: " + covered + "/" + total + " (" + (covered * 100.0) / total + "%)";
+    Log.i(Global.DEBUG, message);
+    if (total != covered) {
+      fail(message);
+    }
+  }
 }

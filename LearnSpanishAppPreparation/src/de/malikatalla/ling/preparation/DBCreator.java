@@ -32,6 +32,7 @@ import de.malikatalla.ling.ling.Flection;
 /** Takes a wiktionary dump as input and creates the database for the android app from it */
 public class DBCreator {
 
+  static final String WIKI_DUMP = "InputData/eswiktionary-20140305-pages-meta-current.xml";
   private static final File ENDINGS_FILE = new File("InputData/conjugations.txt");
   private static final String COMMA = ",";
 
@@ -39,7 +40,7 @@ public class DBCreator {
       IOException {
     Global.init();
     Map<String, ConjugationDescription> conjugations = WictionaryConjugationExtractor
-        .extractConjugations("InputData/eswiktionary-20140305-pages-meta-current.xml");
+        .extractConjugations(WIKI_DUMP);
     createDatabase(conjugations);
   }
 

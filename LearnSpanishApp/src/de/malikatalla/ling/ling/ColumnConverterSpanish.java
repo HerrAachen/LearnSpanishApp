@@ -11,8 +11,8 @@ import java.util.List;
  * 
  */
 public class ColumnConverterSpanish implements ColumnConverter {
-  private static final String SEPARATOR_DB = "_";
-  private static final String SEPARATOR_PARSER = ".";
+  static final String SEPARATOR_DB = "_";
+  static final String SEPARATOR_PARSER = ".";
   private List<Flection> allFlections = null;
 
   @Override

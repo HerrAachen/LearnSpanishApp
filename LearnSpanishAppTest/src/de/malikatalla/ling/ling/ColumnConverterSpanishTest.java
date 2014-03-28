@@ -25,4 +25,14 @@ public class ColumnConverterSpanishTest extends TestCase {
     assertEquals(new Flection(null, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE),cc.parseDBColumn("im.2p"));
   }
   
+  public void testInEqualsOut(){
+    for(Flection f: cc.flectionIterator()){
+      String dbColumn = cc.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode());
+      String wikiInflection = dbColumn.replace(ColumnConverterSpanish.SEPARATOR_DB, ColumnConverterSpanish.SEPARATOR_PARSER);
+      Flection parsedFlection = cc.parseDBColumn(wikiInflection);
+      assertNotNull("parsed flection null for " + wikiInflection,parsedFlection);
+      assertEquals(f,parsedFlection);
+    }
+  }
+  
 }
