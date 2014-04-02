@@ -62,9 +62,15 @@ public class DBCreator {
     }
     sql.append(")");
     stat.executeUpdate(sql.toString());
+    sql = new StringBuilder();
     stat.executeUpdate("drop table if exists " + VerbTable.TABLE_NAME);
-    stat.executeUpdate("create table " + VerbTable.TABLE_NAME + " (" + VerbTable.COLUMN_INFINITIVE + " TEXT" + COMMA
-        + VerbTable.COLUMN_ROOT + " TEXT" + COMMA + VerbTable.COLUMN_CONJUGATION + " INTEGER" + ")");
+    sql.append("create table " + VerbTable.TABLE_NAME + " (" + VerbTable.COLUMN_INFINITIVE + " TEXT" + COMMA
+        + VerbTable.COLUMN_ROOT + " TEXT" + COMMA + VerbTable.COLUMN_CONJUGATION + " INTEGER");
+    for (Flection f : cc.flectionIterator()) {
+      addColumn(cc.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
+    }
+    sql.append(")");
+    stat.executeUpdate(sql.toString());
     // sort conjugations alphabetically and map to ID
     Set<String> conjugations = new TreeSet<>();
     for (ConjugationDescription d : inf2conj.values()) {
@@ -108,12 +114,23 @@ public class DBCreator {
     // put verbs to table
     count = 0;
     System.out.println("Creating verb table");
-    PreparedStatement prep2 = conn.prepareStatement("insert into " + VerbTable.TABLE_NAME + " values (?, ?, ?)");
+    insertStatement = new StringBuilder();
+    insertStatement.append("insert into " + VerbTable.TABLE_NAME + " values (");
+    for (int j = 0; j < ENDINGS_COUNT + 3; j++) {
+      insertStatement.append("?,");
+    }
+    PreparedStatement prep2 = conn.prepareStatement(insertStatement.substring(0, insertStatement.length() - 1) + ")");
     for (Map.Entry<String, ConjugationDescription> entry : inf2conj.entrySet()) {
-      prep2.setString(1, entry.getKey());
-      prep2.setString(2, entry.getValue().getRoot());
-      System.out.println(count++ + "/" + inf2conj.size() + " " + entry.getKey() + " " + entry.getValue());
-      prep2.setInt(3, conj2ID.get(entry.getValue().getBasicConjugation()));
+      int index = 0;
+      prep2.setString(++index, entry.getKey());
+      ConjugationDescription conjugationDescription = entry.getValue();
+      prep2.setString(++index, conjugationDescription.getRoot());
+      System.out.println(count++ + "/" + inf2conj.size() + " " + entry.getKey() + " " + conjugationDescription);
+      prep2.setInt(++index, conj2ID.get(conjugationDescription.getBasicConjugation()));
+      for(Flection f: cc.flectionIterator()){
+        String inflectedForm = conjugationDescription.getIrregularFlections().getInflectedForm(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode());
+        prep2.setString(++index, inflectedForm);
+      }
       prep2.addBatch();
     }
     System.out.println("batch execute");
