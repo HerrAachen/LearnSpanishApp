@@ -8,7 +8,12 @@ public class Flections {
    private String                infinitive;
    private Map<Flection, String> inflectedForms = new HashMap<Flection, String>();
 
-   public Flections() {
+   @Override
+  public String toString() {
+    return "[infinitive=" + infinitive + ", inflectedForms=" + inflectedForms + "]";
+  }
+
+  public Flections() {
       this(null);
    }
 

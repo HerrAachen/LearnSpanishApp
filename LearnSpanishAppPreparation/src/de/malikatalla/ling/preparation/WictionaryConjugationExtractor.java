@@ -12,6 +12,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import de.malikatalla.ling.Global;
+import de.malikatalla.ling.ling.Flection;
+
 public class WictionaryConjugationExtractor {
 
   private static final String conjugationTitle = "==Conjugación==";
@@ -35,7 +38,7 @@ public class WictionaryConjugationExtractor {
       if (conjugationDescriptionString != null) {
         ConjugationDescription desc = parseConjugationDescription(conjugationDescriptionString);
         if (desc != null && desc.getBasicConjugation().contains(conjugationES)) {
-          System.out.println(conjugationDescriptionString + "'" + desc.getBasicConjugation() + "' '" + desc.getRoot() + "'");
+          System.out.println(conjugationDescriptionString + " -- " + desc);
           inf2conj.put(entry.getKey(), desc);
           basicConjugs.increment(desc.getBasicConjugation());
         }
@@ -53,15 +56,10 @@ public class WictionaryConjugationExtractor {
 
   private static ConjugationDescription parseConjugationDescription(String description) {
     if (description != null) {
-      description = removeOuterBrackets(description);
+      description = removeOuterBrackets(description, new String[] { "{", "}" });
       String[] parts = description.split("\\|");
       // first element describes the regular conjugation
       String basicConjugation = parts[0];
-      // String basicConjugation =
-      // description.substring(description.indexOf("{{") + 2, indexOfPipe
-      // >= 0 ?
-      // indexOfPipe
-      // : description.length() - 2);
       if (basicConjugation.startsWith(PLANTILLA)) {
         basicConjugation = basicConjugation.substring(PLANTILLA.length());
       }
@@ -84,20 +82,56 @@ public class WictionaryConjugationExtractor {
       ConjugationDescription desc = new ConjugationDescription();
       desc.setBasicConjugation(basicConjugation.trim());
       desc.setRoot(root);
+      // parse irregular conjugations
+      for (int i = 1; i < parts.length; i++) {
+        String part = parts[i];
+        String[] leftAndRight = part.split("=");
+        if (leftAndRight != null && leftAndRight.length == 2) {
+          String left = leftAndRight[0];
+          String right = leftAndRight[1];
+          Flection flection = parseFlection(left);
+          if (flection != null) {
+            String inflectedForm = parseInflectedForm(right);
+            desc.getIrregularFlections().addInflectedForm(flection, inflectedForm);
+          }
+        }
+      }
       return desc;
     }
     return null;
   }
 
-  private static String removeOuterBrackets(String description) {
+  static String parseInflectedForm(String right) {
+    String inner = removeOuterBrackets(right, new String[]{"{","}","[","]","*","'"});
+    String[] innerParts = inner.split("\\|");
+    if (innerParts.length>=1){
+      return innerParts[0];
+    }
+    throw new RuntimeException(WictionaryConjugationExtractor.class.getSimpleName() + ": Something bad happened");
+  }
+
+  static Flection parseFlection(String flectionString) {
+    Flection flection = Global.getColumnConverter().parseDBColumn(flectionString);
+    return flection;
+  }
+
+  static String removeOuterBrackets(String description, String[] brackets) {
     String res = description;
     res = res.trim();
-    while (res.startsWith("{")) {
-      res = res.substring(1);
-    }
-    while (res.endsWith("}")) {
-      res = res.substring(0, res.length() - 1);
-    }
+    boolean found = true;
+    while (found) {
+      found = false;
+      for (String bracket : brackets) {
+        while (res.startsWith(bracket)) {
+          res = res.substring(bracket.length());
+          found = true;
+        }
+        while (res.endsWith(bracket)) {
+          res = res.substring(0, res.length() - bracket.length());
+          found = true;
+        }
+      }
+    };
     return res;
   }
 
@@ -110,9 +144,9 @@ public class WictionaryConjugationExtractor {
       String conjugationString = preParsed.substring(matcher.end(), preParsed.length());
       int startIndex = conjugationString.indexOf("{{");
       int endIndex = conjugationString.indexOf("}}", startIndex);
-      endIndex = endIndex<0?conjugationString.length():endIndex+2;
+      endIndex = endIndex < 0 ? conjugationString.length() : endIndex + 2;
       if (startIndex >= 0) {
-        conjugationString = conjugationString.substring(startIndex,endIndex);
+        conjugationString = conjugationString.substring(startIndex, endIndex);
         return conjugationString.trim();
       }
     }
