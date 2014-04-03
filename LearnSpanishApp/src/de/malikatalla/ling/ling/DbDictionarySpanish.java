@@ -51,8 +51,8 @@ public class DbDictionarySpanish extends DbDictionary {
       }
 
       private String getInflectedForm(String roots, Flection flection, Cursor res, String infinitive) {
-        String conjugationColumn = Global.getColumnConverter().getDBColumn(flection.getTense(), flection.getPerson(), flection.getNumber(),
-            flection.getGender(), flection.getMode());
+        String conjugationColumn = Global.getColumnConverter().getDBColumn(flection.getTense(), flection.getPerson(),
+            flection.getNumber(), flection.getGender(), flection.getMode());
         if (conjugationColumn == null) {
           return null;
         }
@@ -75,11 +75,19 @@ public class DbDictionarySpanish extends DbDictionary {
       return auxiliary + " " + participle;
     }
     String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
-//    Log.i(Global.DEBUG, "column: " + conjugationColumn);
+    // Log.i(Global.DEBUG, "column: " + conjugationColumn);
     if (conjugationColumn == null) {
       return null;
     }
     SQLiteDatabase db = con.getReadableDatabase();
+    Cursor curIrr = db.query(VerbTable.TABLE_NAME, new String[] { conjugationColumn }, VerbTable.COLUMN_INFINITIVE + "='"
+        + infinitive + "'", null, null, null, null);
+    if (curIrr != null && curIrr.moveToNext()) {
+      String irregularConjugation = curIrr.getString(curIrr.getColumnIndex(conjugationColumn));
+      if (irregularConjugation != null && irregularConjugation.length()>0) {
+        return irregularConjugation;
+      }
+    }
     Cursor res = db
         .query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON " + VerbTable.TABLE_NAME + "."
             + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "." + ConjugationTable.COLUMN_CONJ_ID,
@@ -127,8 +135,8 @@ public class DbDictionarySpanish extends DbDictionary {
     boolean isReflexive = infinitive.endsWith("se");
     List<String> endings = new ArrayList<String>();
     endings.addAll(Arrays.asList(ending.split(";")));
-//    Log.i(Global.DEBUG, Arrays.toString(roots));
-//    Log.i(Global.DEBUG, endings.toString());
+    // Log.i(Global.DEBUG, Arrays.toString(roots));
+    // Log.i(Global.DEBUG, endings.toString());
     StringBuilder resultBuilder = new StringBuilder();
 
     Iterator<String> iterator = endings.iterator();
@@ -146,7 +154,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
       }
     }
-//    Log.i(Global.DEBUG, endings.toString());
+    // Log.i(Global.DEBUG, endings.toString());
     for (int endingsIndex = 0; endingsIndex < endings.size(); endingsIndex++) {
       String currentEnding = endings.get(endingsIndex);
       LinkedList<Integer> rootIndices = new LinkedList<Integer>();
@@ -231,11 +239,12 @@ public class DbDictionarySpanish extends DbDictionary {
 
   @Override
   public String getReflexivePronoun(Tense t, Person p, Number n, Gender g, Mode m) {
-    if (m.equals(Mode.PARTICIPLE)){
+    if (m.equals(Mode.PARTICIPLE)) {
       return "";
     }
     if (n == null || p == null) {
-      throw new NullPointerException("getReflexivePronoun: Person and Number must not be null:" + new Flection(t, p, n, g, m).toString());
+      throw new NullPointerException("getReflexivePronoun: Person and Number must not be null:"
+          + new Flection(t, p, n, g, m).toString());
     }
     if (n.equals(Number.SINGULAR)) {
       switch (p) {

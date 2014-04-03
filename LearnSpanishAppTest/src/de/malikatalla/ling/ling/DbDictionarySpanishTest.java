@@ -33,6 +33,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
 
   public void testVerbs() {
     List<String> verbs = d.getAllVerbs();
+    assertTrue(verbs.size()>3000);
     for (String verb : verbs) {
       assertFalse(verb.matches("\\p{Punct}"));
     }
@@ -87,6 +88,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   }
 
   public void testIrregular() {
+    assertEquals("asgo", d.getInflectedForm("asir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("has", d.getInflectedForm("haber", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
   }
   
