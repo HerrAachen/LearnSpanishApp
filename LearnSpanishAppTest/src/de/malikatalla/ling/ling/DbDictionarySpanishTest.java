@@ -90,6 +90,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   public void testIrregular() {
     assertEquals("asgo", d.getInflectedForm("asir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("has", d.getInflectedForm("haber", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("ha", d.getInflectedForm("haber", Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
   }
   
   public void testAprenderse(){

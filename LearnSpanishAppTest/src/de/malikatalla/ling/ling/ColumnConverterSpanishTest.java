@@ -23,6 +23,7 @@ public class ColumnConverterSpanishTest extends TestCase {
     assertEquals(new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE),cc.parseDBColumn("i.p.1s"));
     assertEquals(new Flection(Tense.IMPERFECT, Person.SECOND, Number.SINGULAR, null, Mode.SUBJUNCTIVE),cc.parseDBColumn("s.pi.2s"));
     assertEquals(new Flection(null, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE),cc.parseDBColumn("im.2p"));
+    assertEquals(cc.parseDBColumn("i.2p"),cc.parseDBColumn("im.2p"));
   }
   
   public void testInEqualsOut(){

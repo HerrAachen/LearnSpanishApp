@@ -51,7 +51,10 @@ public class ColumnConverterSpanish implements ColumnConverter {
     if (parts.length < 2) {
       return null;
     }
-    Mode mode = getMode(parts[0]);
+    Mode mode = getMode(parts[0], parts);
+    if (mode==null){
+      return null;
+    }
     Tense tense = null;
     Person person = null;
     Number number = null;
@@ -69,10 +72,13 @@ public class ColumnConverterSpanish implements ColumnConverter {
     return new Flection(tense, person, number, null, mode);
   }
 
-  private Mode getMode(String modeString) {
+  private Mode getMode(String modeString, String[] allParts) {
     if (modeString.equals("i")) {
+      if (allParts.length==2){//spelling error
+        return Mode.IMPERATIVE;
+      }
       return Mode.INDICATIVE;
-    } else if (modeString.equals("im")) {
+    } else if (modeString.equals("im") || modeString.equals("imppron")) {
       return Mode.IMPERATIVE;
     } else if (modeString.equals("p")) {
       return Mode.PARTICIPLE;

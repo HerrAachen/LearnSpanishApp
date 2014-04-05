@@ -143,7 +143,7 @@ public class WictionaryConjugationExtractor {
     if (found) {
       String conjugationString = preParsed.substring(matcher.end(), preParsed.length());
       int startIndex = conjugationString.indexOf("{{");
-      int endIndex = conjugationString.indexOf("}}", startIndex);
+      int endIndex = findEndIndex(conjugationString,startIndex);
       endIndex = endIndex < 0 ? conjugationString.length() : endIndex + 2;
       if (startIndex >= 0) {
         conjugationString = conjugationString.substring(startIndex, endIndex);
@@ -151,5 +151,26 @@ public class WictionaryConjugationExtractor {
       }
     }
     return null;
+  }
+
+  private static int findEndIndex(String conjugationString, int startIndex) {
+    int openedBrackets = 0;
+    int i = startIndex+1;
+    try {
+    while(openedBrackets>=0 && i<conjugationString.length()-1){
+      i++;
+      char charAt = conjugationString.charAt(i);
+      if (charAt=='{'){
+        openedBrackets++;
+      }
+      if (charAt=='}'){
+        openedBrackets--;
+      }
+    }
+    } catch(IndexOutOfBoundsException e){
+      System.out.println(conjugationString);
+      throw e;
+    }
+    return i;
   }
 }

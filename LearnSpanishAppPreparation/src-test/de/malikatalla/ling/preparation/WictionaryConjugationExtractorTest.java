@@ -36,27 +36,37 @@ public class WictionaryConjugationExtractorTest {
 
   @Test
   public void testExtractConjugation() {
-    assertEquals("{{es.v.conj.ar|pesquis}}",WictionaryConjugationExtractor.extractConjugationFromWikiArticle("==Conjugación==\n\n{{es.v.conj.ar|pesquis}}-->\n"));
+    assertEquals("{{es.v.conj.ar|pesquis}}",
+        WictionaryConjugationExtractor.extractConjugationFromWikiArticle("==Conjugación==\n\n{{es.v.conj.ar|pesquis}}-->\n"));
+    assertEquals(
+        "{{es.v.conj.er|hab|irregular=x|notas=Las irregularidades se señalan en {{resaltar|negrita}}. |i.p.1s=[[he]]|i.p.2s=[[has]]|i.p.2s2=[[has]]|im.2p=''habed''**}}",
+        WictionaryConjugationExtractor
+            .extractConjugationFromWikiArticle("==Conjugación==\n====Como auxiliar o transitivo====\n"
+                + "{{es.v.conj.er|hab|irregular=x|notas=Las irregularidades se señalan en {{resaltar|negrita}}. |i.p.1s=[[he]]|i.p.2s=[[has]]|i.p.2s2=[[has]]|im.2p=''habed''**}}\n"));
+    assertNull(WictionaryConjugationExtractor.extractConjugationFromWikiArticle("==Conjugación==\nComo [[dar]] (incluida la forma [[pronominal]]), + '''por'''"));
+
   }
-  
+
   @Test
-  public void testParseFlection(){
-    assertEquals(new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE),WictionaryConjugationExtractor.parseFlection("i.p.1s"));
-    assertEquals(WictionaryConjugationExtractor.parseFlection("i.p.1s2"),WictionaryConjugationExtractor.parseFlection("i.p.1s"));
+  public void testParseFlection() {
+    assertEquals(new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE),
+        WictionaryConjugationExtractor.parseFlection("i.p.1s"));
+    assertEquals(WictionaryConjugationExtractor.parseFlection("i.p.1s2"), WictionaryConjugationExtractor.parseFlection("i.p.1s"));
   }
-  
+
   @Test
-  public void testRemoveOuterBrackets(){
-    assertEquals("abc",WictionaryConjugationExtractor.removeOuterBrackets("{{abc}}", new String[]{"{","}"}));
-    assertEquals("habed",WictionaryConjugationExtractor.removeOuterBrackets("''habed''**", new String[]{"'","*"}));
-    assertEquals("asgo",WictionaryConjugationExtractor.removeOuterBrackets("'''[[asgo]]'''", new String[]{"[","]","*","'"}));
+  public void testRemoveOuterBrackets() {
+    assertEquals("abc", WictionaryConjugationExtractor.removeOuterBrackets("{{abc}}", new String[] { "{", "}" }));
+    assertEquals("habed", WictionaryConjugationExtractor.removeOuterBrackets("''habed''**", new String[] { "'", "*" }));
+    assertEquals("asgo",
+        WictionaryConjugationExtractor.removeOuterBrackets("'''[[asgo]]'''", new String[] { "[", "]", "*", "'" }));
   }
-  
+
   @Test
-  public void testParseInflectedForm(){
-    assertEquals("abc",WictionaryConjugationExtractor.parseInflectedForm("{{abc}}"));
-    assertEquals("habed",WictionaryConjugationExtractor.parseInflectedForm("''habed''**"));
-    assertEquals("asgo",WictionaryConjugationExtractor.parseInflectedForm("'''[[asgo]]'''"));
+  public void testParseInflectedForm() {
+    assertEquals("abc", WictionaryConjugationExtractor.parseInflectedForm("{{abc}}"));
+    assertEquals("habed", WictionaryConjugationExtractor.parseInflectedForm("''habed''**"));
+    assertEquals("asgo", WictionaryConjugationExtractor.parseInflectedForm("'''[[asgo]]'''"));
   }
 
 }
