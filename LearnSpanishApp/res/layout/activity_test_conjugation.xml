@@ -1,20 +1,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".TestConjugationActivity" >
 
     <TextView
         android:id="@+id/test_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/empty" />
-	<EditText
-        android:id="@+id/test_answer"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/empty"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/test_flection"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:inputType="text"
-        />   
+        android:layout_height="wrap_content"
+        android:text="@string/empty" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/test_personal_pronoun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PersonalPronoun" />
+
+        <EditText
+            android:id="@+id/test_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -6,8 +6,6 @@ import org.junit.Before;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import android.util.Log;
-import de.malikatalla.ling.Global;
 import de.malikatalla.ling.gui.MainActivity;
 
 public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> {
@@ -80,6 +78,10 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("acalorad", d.getInflectedForm("acalorar", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
     assertEquals("acaloraos",
         d.getInflectedForm("acalorarse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
+    assertEquals("abarragánate",
+        d.getInflectedForm("abarraganarse", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
+    assertEquals("abarraganémonos",
+        d.getInflectedForm("abarraganarse", Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
   }
 
   public void testIndicativePastPerfect() {

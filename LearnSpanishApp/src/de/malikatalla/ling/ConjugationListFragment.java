@@ -33,7 +33,7 @@ public class ConjugationListFragment extends Fragment {
 		List<String> pronouns = (List<String>) args.getSerializable("pronouns");
 		
 		TextView conjugationCombination = (TextView) inflate.findViewById(R.id.conjCombination);
-		conjugationCombination.setText(tense + " " + mode);
+		conjugationCombination.setText((tense!=null?tense + " ":"") + (mode!=null?mode:""));
 		LinearLayout conjList = (LinearLayout) inflate.findViewById(R.id.conjugationListView);
 		LinearLayout pronounList = (LinearLayout) inflate.findViewById(R.id.pronounListView);
 //		conjList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.conjugation_list_item, conjugations

@@ -1,5 +1,7 @@
 package de.malikatalla.ling.ling;
 
+import de.malikatalla.ling.Global;
+
 public class Flection {
 
   private Tense tense;
@@ -92,7 +94,6 @@ public class Flection {
 
   @Override
   public String toString() {
-    return "Flection [tense=" + tense + ", person=" + person + ", number=" + number + ", gender=" + gender + ", mode=" + mode
-        + "]";
+    return Global.getColumnConverter().flectionToString(this);
   }
 }

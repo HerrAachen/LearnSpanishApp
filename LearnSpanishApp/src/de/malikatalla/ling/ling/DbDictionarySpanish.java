@@ -51,6 +51,10 @@ public class DbDictionarySpanish extends DbDictionary {
       }
 
       private String getInflectedForm(String roots, Flection flection, Cursor res, String infinitive) {
+        String compound = handleCompoundTenses(infinitive, flection.getTense(), flection.getPerson(), flection.getNumber(), flection.getGender(),flection.getMode());
+        if (compound!=null){
+          return compound;
+        }
         String conjugationColumn = Global.getColumnConverter().getDBColumn(flection.getTense(), flection.getPerson(),
             flection.getNumber(), flection.getGender(), flection.getMode());
         if (conjugationColumn == null) {
@@ -69,10 +73,9 @@ public class DbDictionarySpanish extends DbDictionary {
 
   @Override
   public String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
-    if (isCompoundTense(t, m)) {
-      String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
-      String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
-      return auxiliary + " " + participle;
+    String compound = handleCompoundTenses(infinitive, t, p, n, g, m);
+    if (compound!=null){
+      return compound;
     }
     String conjugationColumn = Global.getColumnConverter().getDBColumn(t, p, n, g, m);
     // Log.i(Global.DEBUG, "column: " + conjugationColumn);
@@ -99,6 +102,15 @@ public class DbDictionarySpanish extends DbDictionary {
       String ending = res.getString(1);
       // Log.i(Global.DEBUG, roots + " " + ending);
       return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive);
+    }
+    return null;
+  }
+
+  private String handleCompoundTenses(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
+    if (isCompoundTense(t, m)) {
+      String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
+      String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
+      return auxiliary + " " + participle;
     }
     return null;
   }

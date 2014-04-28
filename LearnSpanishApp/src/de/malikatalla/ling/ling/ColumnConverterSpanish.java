@@ -1,6 +1,6 @@
 package de.malikatalla.ling.ling;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +10,7 @@ import java.util.List;
  * @author Malik
  * 
  */
-public class ColumnConverterSpanish implements ColumnConverter {
+public class ColumnConverterSpanish extends ColumnConverter {
   static final String SEPARATOR_DB = "_";
   static final String SEPARATOR_PARSER = ".";
   private List<Flection> allFlections = null;
@@ -183,7 +183,7 @@ public class ColumnConverterSpanish implements ColumnConverter {
 
   public List<Flection> flectionIterator() {
     if (allFlections == null) {
-      allFlections = new LinkedList<Flection>();
+      allFlections = new ArrayList<Flection>();
       allFlections.add(new Flection(Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
@@ -240,6 +240,11 @@ public class ColumnConverterSpanish implements ColumnConverter {
       allFlections.add(new Flection(null, null, null, null, Mode.PARTICIPLE));
     }
     return allFlections;
+  }
+
+  @Override
+  public String flectionToString(Flection f) {
+    return f.getMode() + ", " + f.getTense() + ", " + f.getNumber() + ", " + f.getPerson() + " Person";
   }
 
 }
