@@ -29,10 +29,17 @@
             android:gravity="right"
             android:orientation="vertical" />
 
+        <android.support.v7.widget.Space
+            android:id="@+id/space1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="10sp" />
+
         <LinearLayout
             android:id="@+id/conjugationListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </LinearLayout>
-</LinearLayout>
+
+</LinearLayout>

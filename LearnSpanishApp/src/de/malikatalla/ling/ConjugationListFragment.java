@@ -29,7 +29,6 @@ public class ConjugationListFragment extends Fragment {
 //		String verb = args.getString(ShowVerbsActivity.VERB);
 		Tense tense = (Tense)args.getSerializable(Tense.class.getName());
 		Mode mode= (Mode)args.getSerializable(Mode.class.getName());
-		Log.i(Global.DEBUG, "ConjugationListFragment " + tense + " " + mode);
 
 		List<String> conjugations = (List<String>) args.getSerializable("conjugations");
 		List<String> pronouns = (List<String>) args.getSerializable("pronouns");
