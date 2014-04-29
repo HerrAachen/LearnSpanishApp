@@ -46,13 +46,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </FrameLayout>
+
         <FrameLayout
             android:id="@+id/pluscuam_perfect_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </FrameLayout>
+
         <FrameLayout
             android:id="@+id/future_perfect_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/conditional_perfect_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </FrameLayout>
@@ -83,6 +91,18 @@
 
         <FrameLayout
             android:id="@+id/future_subjunctive_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/past_perfect_subjunctive_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/pluscuam_perfect_subjunctive_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </FrameLayout>

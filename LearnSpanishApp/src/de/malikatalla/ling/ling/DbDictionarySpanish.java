@@ -130,6 +130,8 @@ public class DbDictionarySpanish extends DbDictionary {
       return Tense.IMPERFECT;
     case FUTURE_PERFECT:
       return Tense.FUTURE;
+    case CONDITIONAL_PERFECT:
+      return Tense.CONDITIONAL;
     default:
       return null;
     }
@@ -139,7 +141,7 @@ public class DbDictionarySpanish extends DbDictionary {
     if (t == null || m == null) {
       return false;
     }
-    return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT)) && m.equals(Mode.INDICATIVE);
+    return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT) || t.equals(Tense.CONDITIONAL_PERFECT)) && (m.equals(Mode.INDICATIVE) || m.equals(Mode.SUBJUNCTIVE));
   }
 
   private String extractConjugation(String rootsString, String ending, Flection flection, String infinitive) {
