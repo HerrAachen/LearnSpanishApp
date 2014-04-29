@@ -107,7 +107,9 @@ public class DbDictionarySpanish extends DbDictionary {
   }
 
   private String handleCompoundTenses(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
+    Log.i(Global.DEBUG, "handleCompound " + t + " " + m);
     if (isCompoundTense(t, m)) {
+      Log.i(Global.DEBUG, "is Compound: ");
       String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
       String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
       return auxiliary + " " + participle;
@@ -124,6 +126,10 @@ public class DbDictionarySpanish extends DbDictionary {
     switch (t) {
     case PAST_PERFECT:
       return Tense.PRESENT;
+    case PLUSCUAM_PERFECT:
+      return Tense.IMPERFECT;
+    case FUTURE_PERFECT:
+      return Tense.FUTURE;
     default:
       return null;
     }
@@ -133,7 +139,7 @@ public class DbDictionarySpanish extends DbDictionary {
     if (t == null || m == null) {
       return false;
     }
-    return t.equals(Tense.PAST_PERFECT) && m.equals(Mode.INDICATIVE);
+    return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT)) && m.equals(Mode.INDICATIVE);
   }
 
   private String extractConjugation(String rootsString, String ending, Flection flection, String infinitive) {

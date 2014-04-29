@@ -7,7 +7,7 @@
     <string name="empty">Empty</string>
     <string name="title_activity_test_conjugation">TestConjugationActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="show_conjugation">Show Conjugation</string>
+    <string name="show_conjugation">Show All Verbs</string>
     <string name="title_activity_show_verbs">ShowVerbsActivity</string>
     <string name="loading">Loading...</string>
     <string name="title_activity_tense_chooser">TenseChooserActivity</string>

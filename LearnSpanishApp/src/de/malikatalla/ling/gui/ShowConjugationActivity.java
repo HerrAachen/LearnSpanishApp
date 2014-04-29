@@ -35,6 +35,9 @@ public class ShowConjugationActivity extends FragmentActivity {
     addFragment(intent, verb, Tense.PRESENT, Mode.INDICATIVE, R.id.present_indicative_container, allInflectedForms);
     addFragment(intent, verb, Tense.IMPERFECT, Mode.INDICATIVE, R.id.imperfect_indicative_container, allInflectedForms);
     addFragment(intent, verb, Tense.SIMPLE_PAST, Mode.INDICATIVE, R.id.simple_past_indicative_container, allInflectedForms);
+    addFragment(intent, verb, Tense.PAST_PERFECT, Mode.INDICATIVE, R.id.past_perfect_indicative_container, allInflectedForms);
+    addFragment(intent, verb, Tense.PLUSCUAM_PERFECT, Mode.INDICATIVE, R.id.pluscuam_perfect_container, allInflectedForms);
+    addFragment(intent, verb, Tense.FUTURE_PERFECT, Mode.INDICATIVE, R.id.future_perfect_container, allInflectedForms);
     addFragment(intent, verb, Tense.FUTURE, Mode.INDICATIVE, R.id.future_indicative_container, allInflectedForms);
     addFragment(intent, verb, Tense.CONDITIONAL, Mode.INDICATIVE, R.id.conditional_indicative_container, allInflectedForms);
     addFragment(intent, verb, Tense.PAST_PERFECT, Mode.INDICATIVE, R.id.past_perfect_indicative_container, allInflectedForms);

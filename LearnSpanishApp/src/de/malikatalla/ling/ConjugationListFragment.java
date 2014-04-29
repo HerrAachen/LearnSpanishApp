@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class ConjugationListFragment extends Fragment {
 //		String verb = args.getString(ShowVerbsActivity.VERB);
 		Tense tense = (Tense)args.getSerializable(Tense.class.getName());
 		Mode mode= (Mode)args.getSerializable(Mode.class.getName());
+		Log.i(Global.DEBUG, "ConjugationListFragment " + tense + " " + mode);
 
 		List<String> conjugations = (List<String>) args.getSerializable("conjugations");
 		List<String> pronouns = (List<String>) args.getSerializable("pronouns");
