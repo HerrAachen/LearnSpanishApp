@@ -93,6 +93,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("asgo", d.getInflectedForm("asir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("has", d.getInflectedForm("haber", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("ha", d.getInflectedForm("haber", Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("estoy", d.getInflectedForm("estar", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
   
   public void testAprenderse(){
@@ -101,7 +102,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
 
 //  public void testCoverage() throws Exception {
 //    int total = 0;
-//    int covered = 0;
+//    int covered = 0; strom.berlin@vattenv.de
 //    int verbCount = 0;
 //    List<String> allVerbs = d.getAllVerbs();
 //    for (String verb : allVerbs) {
