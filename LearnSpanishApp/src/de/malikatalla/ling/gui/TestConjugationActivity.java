@@ -5,6 +5,8 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.EditText;
@@ -24,6 +26,8 @@ public class TestConjugationActivity extends Activity {
     private TextView verbView;
     private TextView flectionView;
     private TextView personalPronounView;
+    private TextView resultView;
+    private String inflectedForm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class TestConjugationActivity extends Activity {
 		verbView=(TextView)findViewById(R.id.test_text);
         flectionView=(TextView)findViewById(R.id.test_flection);
         personalPronounView=(TextView)findViewById(R.id.test_personal_pronoun);
+        resultView = (TextView)findViewById(R.id.test_result);
 		Random r = new Random();
 		int randomIndex = r.nextInt(verbs.size());
 		currentVerb = verbs.get(randomIndex);
@@ -45,6 +50,7 @@ public class TestConjugationActivity extends Activity {
 		flectionView.setText(currentFlection.toString());
 		String personalPronoun = dictionary.getPersonalPronoun(currentFlection.getTense(), currentFlection.getPerson(), currentFlection.getNumber(), currentFlection.getGender(), currentFlection.getMode());
 		personalPronounView.setText(personalPronoun);
+		inflectedForm = dictionary.getInflectedForm(currentVerb,currentFlection.getTense(),currentFlection.getPerson(),currentFlection.getNumber(),currentFlection.getGender(),currentFlection.getMode());
 	}
 
 	@Override
@@ -54,12 +60,22 @@ public class TestConjugationActivity extends Activity {
 		return true;
 	}
 	
+	private void verifyAnswer(){
+	  Log.i(Global.DEBUG, "verify answer");
+	  String answer = e.getText().toString();
+	  if (answer.equals(inflectedForm)){
+	    resultView.setText("Correct");
+	  } else {
+        resultView.setText("Wrong");
+	  }
+	}
+	
 	class PressEnterListener implements TextView.OnEditorActionListener {
 
 		@Override
 		public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
 			if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER){
-				
+				verifyAnswer();
 			}
 			return false;
 		}
