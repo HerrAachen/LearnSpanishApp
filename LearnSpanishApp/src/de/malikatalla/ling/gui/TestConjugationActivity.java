@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -19,65 +20,89 @@ import de.malikatalla.ling.ling.Flection;
 
 public class TestConjugationActivity extends Activity {
 
-	private Dictionary dictionary;
-	private EditText e;
-	private String currentVerb;
-	private Flection currentFlection;
-    private TextView verbView;
-    private TextView flectionView;
-    private TextView personalPronounView;
-    private TextView resultView;
-    private String inflectedForm;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_test_conjugation);
-		dictionary = Global.getDictionary();
-		List<String> verbs = dictionary.getAllVerbs();
-		e=(EditText)findViewById(R.id.test_answer);
-		e.setOnEditorActionListener(new PressEnterListener());
-		verbView=(TextView)findViewById(R.id.test_text);
-        flectionView=(TextView)findViewById(R.id.test_flection);
-        personalPronounView=(TextView)findViewById(R.id.test_personal_pronoun);
-        resultView = (TextView)findViewById(R.id.test_result);
-		Random r = new Random();
-		int randomIndex = r.nextInt(verbs.size());
-		currentVerb = verbs.get(randomIndex);
-		verbView.setText(currentVerb);
-		ColumnConverter columnConverter = Global.getColumnConverter();
-		currentFlection = columnConverter.getRandomFlection();
-		flectionView.setText(currentFlection.toString());
-		String personalPronoun = dictionary.getPersonalPronoun(currentFlection.getTense(), currentFlection.getPerson(), currentFlection.getNumber(), currentFlection.getGender(), currentFlection.getMode());
-		personalPronounView.setText(personalPronoun);
-		inflectedForm = dictionary.getInflectedForm(currentVerb,currentFlection.getTense(),currentFlection.getPerson(),currentFlection.getNumber(),currentFlection.getGender(),currentFlection.getMode());
-	}
+  private Dictionary dictionary;
+  private EditText e;
+  private String currentVerb;
+  private Flection currentFlection;
+  private TextView verbView;
+  private TextView flectionView;
+  private TextView personalPronounView;
+  private TextView resultView;
+  private TextView questionNumberView;
+  private String inflectedForm;
+  private int questionCount = 0;
+  private static final int MAX_QUESTIONS = 10;
+  private Random randomVerbGenerator;
+  private List<String> verbs;
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.test_conjugation, menu);
-		return true;
-	}
-	
-	private void verifyAnswer(){
-	  Log.i(Global.DEBUG, "verify answer");
-	  String answer = e.getText().toString();
-	  if (answer.equals(inflectedForm)){
-	    resultView.setText("Correct");
-	  } else {
-        resultView.setText("Wrong");
-	  }
-	}
-	
-	class PressEnterListener implements TextView.OnEditorActionListener {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    questionCount = 0;
+    setContentView(R.layout.activity_test_conjugation);
+    dictionary = Global.getDictionary();
+    verbs = dictionary.getAllVerbs();
+    e = (EditText) findViewById(R.id.test_answer);
+    e.setOnEditorActionListener(new PressEnterListener());
+    verbView = (TextView) findViewById(R.id.test_text);
+    flectionView = (TextView) findViewById(R.id.test_flection);
+    personalPronounView = (TextView) findViewById(R.id.test_personal_pronoun);
+    resultView = (TextView) findViewById(R.id.test_result);
+    randomVerbGenerator = new Random();
+    questionNumberView = (TextView) findViewById(R.id.test_question_number);
 
-		@Override
-		public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-			if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER){
-				verifyAnswer();
-			}
-			return false;
-		}
-	}
+    nextQuestionToGUI();
+  }
+
+  private void nextQuestionToGUI() {
+    resultView.setText("");
+    e.setText("");
+    questionNumberView.setText(++questionCount + "/" + MAX_QUESTIONS);
+    int randomIndex = randomVerbGenerator.nextInt(verbs.size());
+    currentVerb = verbs.get(randomIndex);
+    verbView.setText(currentVerb);
+    ColumnConverter columnConverter = Global.getColumnConverter();
+    currentFlection = columnConverter.getRandomFlection();
+    flectionView.setText(currentFlection.getMode() + ", " + currentFlection.getTense());
+    String personalPronoun = dictionary.getPersonalPronoun(currentFlection.getTense(), currentFlection.getPerson(),
+        currentFlection.getNumber(), currentFlection.getGender(), currentFlection.getMode());
+    personalPronounView.setText(personalPronoun);
+    inflectedForm = dictionary.getInflectedForm(currentVerb, currentFlection.getTense(), currentFlection.getPerson(),
+        currentFlection.getNumber(), currentFlection.getGender(), currentFlection.getMode());
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.test_conjugation, menu);
+    return true;
+  }
+
+  private void verifyAnswer() {
+    String answer = e.getText().toString();
+    if (answer.equals(inflectedForm)) {
+      resultView.setText("Correct");
+      resultView.setBackgroundColor(Color.GREEN);
+    } else {
+      resultView.setText("Wrong");
+      resultView.setBackgroundColor(Color.RED);
+    }
+    Handler handler = new Handler(); 
+    handler.postDelayed(new Runnable() { 
+         public void run() { 
+              nextQuestionToGUI();
+         } 
+    }, 1000); 
+  }
+
+  class PressEnterListener implements TextView.OnEditorActionListener {
+
+    @Override
+    public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+      if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+        verifyAnswer();
+      }
+      return false;
+    }
+  }
 }
