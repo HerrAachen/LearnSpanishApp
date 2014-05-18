@@ -1,5 +1,6 @@
 package de.malikatalla.ling.gui;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -7,10 +8,9 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import de.malikatalla.ling.Global;
 import de.malikatalla.ling.R;
@@ -21,44 +21,54 @@ import de.malikatalla.ling.ling.Flection;
 public class TestConjugationActivity extends Activity {
 
   private Dictionary dictionary;
-  private EditText e;
   private String currentVerb;
   private Flection currentFlection;
   private TextView verbView;
   private TextView flectionView;
   private TextView personalPronounView;
-  private TextView resultView;
   private TextView questionNumberView;
   private String inflectedForm;
   private int questionCount = 0;
   private static final int MAX_QUESTIONS = 10;
-  private Random randomVerbGenerator;
+  private Random randomNumberGenerator;
   private List<String> verbs;
+  private List<Button> buttons;
+  private Button chosenButton;
+  private Button correctButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    chosenButton = null;
     questionCount = 0;
     setContentView(R.layout.activity_test_conjugation);
     dictionary = Global.getDictionary();
     verbs = dictionary.getAllVerbs();
-    e = (EditText) findViewById(R.id.test_answer);
-    e.setOnEditorActionListener(new PressEnterListener());
+    buttons = new LinkedList<Button>();
+    buttons.add((Button) findViewById(R.id.test_button1));
+    buttons.add((Button) findViewById(R.id.test_button2));
+    buttons.add((Button) findViewById(R.id.test_button3));
+    buttons.add((Button) findViewById(R.id.test_button4));
+    ButtonClickListener buttonClickListener = new ButtonClickListener();
+    for (Button b : buttons) {
+      b.setOnClickListener(buttonClickListener);
+    }
     verbView = (TextView) findViewById(R.id.test_text);
     flectionView = (TextView) findViewById(R.id.test_flection);
     personalPronounView = (TextView) findViewById(R.id.test_personal_pronoun);
-    resultView = (TextView) findViewById(R.id.test_result);
-    randomVerbGenerator = new Random();
+    randomNumberGenerator = new Random();
     questionNumberView = (TextView) findViewById(R.id.test_question_number);
-
     nextQuestionToGUI();
   }
 
   private void nextQuestionToGUI() {
-    resultView.setText("");
-    e.setText("");
+    correctButton = null;
+    chosenButton = null;
+    for (Button b : buttons) {
+      b.setBackgroundResource(android.R.drawable.btn_default);
+    }    
     questionNumberView.setText(++questionCount + "/" + MAX_QUESTIONS);
-    int randomIndex = randomVerbGenerator.nextInt(verbs.size());
+    int randomIndex = randomNumberGenerator.nextInt(verbs.size());
     currentVerb = verbs.get(randomIndex);
     verbView.setText(currentVerb);
     ColumnConverter columnConverter = Global.getColumnConverter();
@@ -67,8 +77,27 @@ public class TestConjugationActivity extends Activity {
     String personalPronoun = dictionary.getPersonalPronoun(currentFlection.getTense(), currentFlection.getPerson(),
         currentFlection.getNumber(), currentFlection.getGender(), currentFlection.getMode());
     personalPronounView.setText(personalPronoun);
-    inflectedForm = dictionary.getInflectedForm(currentVerb, currentFlection.getTense(), currentFlection.getPerson(),
-        currentFlection.getNumber(), currentFlection.getGender(), currentFlection.getMode());
+    inflectedForm = dictionary.getInflectedForm(currentVerb, currentFlection);
+    setAnswersToButtons();
+  }
+
+  private void setAnswersToButtons() {
+    int buttonIndex = randomNumberGenerator.nextInt(buttons.size());
+    int i = 0;
+    for (Button b : buttons) {
+      if (i == buttonIndex) {
+        b.setText(inflectedForm);
+        correctButton = b;
+      } else {
+        String inflected = null;
+        do {
+          Flection randomFlection = Global.getColumnConverter().getRandomFlection();
+          inflected = dictionary.getInflectedForm(currentVerb, randomFlection);
+        } while (inflectedForm!= null && inflectedForm.equals(inflected));
+        b.setText(inflected);
+      }
+      i++;
+    }
   }
 
   @Override
@@ -79,30 +108,40 @@ public class TestConjugationActivity extends Activity {
   }
 
   private void verifyAnswer() {
-    String answer = e.getText().toString();
+    int delay = 1000;
+    String answer = chosenButton.getText().toString();
     if (answer.equals(inflectedForm)) {
-      resultView.setText("Correct");
-      resultView.setBackgroundColor(Color.GREEN);
+      chosenButton.setBackgroundColor(Color.GREEN);
+      delay = 300;
     } else {
-      resultView.setText("Wrong");
-      resultView.setBackgroundColor(Color.RED);
+      chosenButton.setBackgroundColor(Color.RED);
+      correctButton.setBackgroundColor(Color.GREEN);
     }
-    Handler handler = new Handler(); 
-    handler.postDelayed(new Runnable() { 
-         public void run() { 
-              nextQuestionToGUI();
-         } 
-    }, 1000); 
+    Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
+      public void run() {
+        nextQuestionToGUI();
+      }
+    }, delay);
   }
 
-  class PressEnterListener implements TextView.OnEditorActionListener {
+  private class ButtonClickListener implements View.OnClickListener {
 
     @Override
-    public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-      if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-        verifyAnswer();
-      }
-      return false;
+    public void onClick(View v) {
+      chosenButton = (Button) v;
+      verifyAnswer();
     }
   }
+
+  // class PressEnterListener implements TextView.OnEditorActionListener {
+  //
+  // @Override
+  // public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+  // if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+  // verifyAnswer();
+  // }
+  // return false;
+  // }
+  // }
 }

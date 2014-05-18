@@ -72,6 +72,16 @@ public class DbDictionarySpanish extends DbDictionary {
   }
 
   @Override
+  public String getInflectedForm(String infinitive, Flection f) {
+    Tense t = f.getTense();
+    Person p = f.getPerson();
+    Number n = f.getNumber();
+    Gender g = f.getGender();
+    Mode m = f.getMode();
+    return getInflectedForm(infinitive, t, p, n, g, m);
+  }
+
+  @Override
   public String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
     String compound = handleCompoundTenses(infinitive, t, p, n, g, m);
     if (compound!=null){

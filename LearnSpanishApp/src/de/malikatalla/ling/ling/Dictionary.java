@@ -9,7 +9,9 @@ public interface Dictionary {
 
 	Dictionary getAllInflectedForms(final String infinitive);
 
-	String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
+    String getInflectedForm(String infinitive, Tense t, Person p, Number n, Gender g, Mode m);
+
+    String getInflectedForm(String infinitive, Flection f);
 
 	String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m);
 

@@ -9,6 +9,7 @@ import de.malikatalla.ling.R.id;
 import de.malikatalla.ling.R.layout;
 import de.malikatalla.ling.R.menu;
 import de.malikatalla.ling.ling.Dictionary;
+import de.malikatalla.ling.ling.Flection;
 import de.malikatalla.ling.ling.Mode;
 import de.malikatalla.ling.ling.Person;
 import de.malikatalla.ling.ling.Tense;
@@ -54,12 +55,12 @@ public class ShowConjugationActivity extends FragmentActivity {
     ConjugationListFragment fragment = new ConjugationListFragment();
     LinkedList<String> conjugations = new LinkedList<String>();
     LinkedList<String> pronouns = new LinkedList<String>();
-    addConjugation(verb, tense, Person.FIRST, Number.SINGULAR, mode, allInflectedForms, conjugations, pronouns);
-    addConjugation(verb, tense, Person.SECOND, Number.SINGULAR, mode, allInflectedForms, conjugations, pronouns);
-    addConjugation(verb, tense, Person.THIRD, Number.SINGULAR, mode, allInflectedForms, conjugations, pronouns);
-    addConjugation(verb, tense, Person.FIRST, Number.PLURAL, mode, allInflectedForms, conjugations, pronouns);
-    addConjugation(verb, tense, Person.SECOND, Number.PLURAL, mode, allInflectedForms, conjugations, pronouns);
-    addConjugation(verb, tense, Person.THIRD, Number.PLURAL, mode, allInflectedForms, conjugations, pronouns);
+    addConjugation(verb, new Flection(tense, Person.FIRST, Number.SINGULAR, null, mode), allInflectedForms, conjugations, pronouns);
+    addConjugation(verb, new Flection(tense, Person.SECOND, Number.SINGULAR, null, mode), allInflectedForms, conjugations, pronouns);
+    addConjugation(verb, new Flection(tense, Person.THIRD, Number.SINGULAR, null, mode), allInflectedForms, conjugations, pronouns);
+    addConjugation(verb, new Flection(tense, Person.FIRST, Number.PLURAL, null, mode), allInflectedForms, conjugations, pronouns);
+    addConjugation(verb, new Flection(tense, Person.SECOND, Number.PLURAL, null, mode), allInflectedForms, conjugations, pronouns);
+    addConjugation(verb, new Flection(tense, Person.THIRD, Number.PLURAL, null, mode), allInflectedForms, conjugations, pronouns);
     Bundle args = new Bundle();
     args.putSerializable(Tense.class.getName(), tense);
     args.putSerializable(Mode.class.getName(), mode);
@@ -70,11 +71,11 @@ public class ShowConjugationActivity extends FragmentActivity {
     getSupportFragmentManager().beginTransaction().add(fragmentContainer, fragment).commit();
   }
 
-  private void addConjugation(String verb, Tense tense, Person p, Number n, Mode mode, Dictionary allInflectedForms,
+  private void addConjugation(String verb, Flection f, Dictionary allInflectedForms,
       LinkedList<String> conjugations, LinkedList<String> pronouns) {
-    String inflectedForm = allInflectedForms.getInflectedForm(verb, tense, p, n, null, mode);
+    String inflectedForm = allInflectedForms.getInflectedForm(verb, f);
     conjugations.add(inflectedForm != null ? inflectedForm : "?");
-    pronouns.add(Global.getDictionary().getPersonalPronoun(tense, p, n, null, mode));
+    pronouns.add(Global.getDictionary().getPersonalPronoun(f.getTense(), f.getPerson(), f.getNumber(), null, f.getMode()));
   }
 
   @Override
