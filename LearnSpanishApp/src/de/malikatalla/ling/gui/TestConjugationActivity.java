@@ -6,6 +6,7 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -66,7 +67,7 @@ public class TestConjugationActivity extends Activity {
     chosenButton = null;
     for (Button b : buttons) {
       b.setBackgroundResource(android.R.drawable.btn_default);
-    }    
+    }
     questionNumberView.setText(++questionCount + "/" + MAX_QUESTIONS);
     int randomIndex = randomNumberGenerator.nextInt(verbs.size());
     currentVerb = verbs.get(randomIndex);
@@ -85,6 +86,7 @@ public class TestConjugationActivity extends Activity {
     int buttonIndex = randomNumberGenerator.nextInt(buttons.size());
     int i = 0;
     for (Button b : buttons) {
+      b.getBackground().setColorFilter(Color.WHITE, Mode.MULTIPLY);
       if (i == buttonIndex) {
         b.setText(inflectedForm);
         correctButton = b;
@@ -93,7 +95,7 @@ public class TestConjugationActivity extends Activity {
         do {
           Flection randomFlection = Global.getColumnConverter().getRandomFlection();
           inflected = dictionary.getInflectedForm(currentVerb, randomFlection);
-        } while (inflectedForm!= null && inflectedForm.equals(inflected));
+        } while (inflectedForm != null && inflectedForm.equals(inflected));
         b.setText(inflected);
       }
       i++;
@@ -111,11 +113,12 @@ public class TestConjugationActivity extends Activity {
     int delay = 1000;
     String answer = chosenButton.getText().toString();
     if (answer.equals(inflectedForm)) {
-      chosenButton.setBackgroundColor(Color.GREEN);
+      // chosenButton.setBackgroundColor(Color.GREEN);
+      chosenButton.getBackground().setColorFilter(Color.GREEN, Mode.MULTIPLY);
       delay = 300;
     } else {
-      chosenButton.setBackgroundColor(Color.RED);
-      correctButton.setBackgroundColor(Color.GREEN);
+      chosenButton.getBackground().setColorFilter(Color.RED, Mode.MULTIPLY);
+      correctButton.getBackground().setColorFilter(Color.GREEN, Mode.MULTIPLY);
     }
     Handler handler = new Handler();
     handler.postDelayed(new Runnable() {
