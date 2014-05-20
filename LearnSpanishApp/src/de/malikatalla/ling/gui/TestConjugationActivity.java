@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class TestConjugationActivity extends Activity {
   private TextView questionNumberView;
   private String inflectedForm;
   private int questionCount = 0;
-  private static final int MAX_QUESTIONS = 10;
+  private static final int MAX_QUESTIONS = 3;
   private Random randomNumberGenerator;
   private List<String> verbs;
   private List<Button> buttons;
@@ -63,6 +64,11 @@ public class TestConjugationActivity extends Activity {
   }
 
   private void nextQuestionToGUI() {
+    if (questionCount>=MAX_QUESTIONS){
+      Intent intent = new Intent(this, FinishedActivity.class);
+      intent.putExtra("Bla", "Go Ahead");
+      startActivity(intent);
+    }
     correctButton = null;
     chosenButton = null;
     for (Button b : buttons) {

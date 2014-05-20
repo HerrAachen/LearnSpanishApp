@@ -53,6 +53,11 @@
             android:name="de.malikatalla.ling.gui.ShowConjugationActivity"
             android:label="@string/title_activity_show_conjugation" >
         </activity>
+        <activity
+            android:name="de.malikatalla.ling.gui.FinishedActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:label="@string/title_activity_finished" >
+        </activity>
     </application>
 
 </manifest>
