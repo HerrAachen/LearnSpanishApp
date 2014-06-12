@@ -1,5 +1,6 @@
 package de.malikatalla.ling.preparation;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +24,10 @@ public class WictionaryConjugationExtractor {
   private static final Pattern LINE_BREAK = Pattern.compile("[\\n\\r]");
 
   public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-    extractConjugations(DBCreator.WIKI_DUMP);
+    extractConjugations(FileUtils.findWikiDump());
   }
 
-  public static Map<String, ConjugationDescription> extractConjugations(String wictionaryDump)
+  public static Map<String, ConjugationDescription> extractConjugations(File wictionaryDump)
       throws ParserConfigurationException, SAXException, IOException {
     Map<String, String> title2article = WictionaryVerbParser.extractVerbs(wictionaryDump);
     System.out.println(title2article.size() + " articles");

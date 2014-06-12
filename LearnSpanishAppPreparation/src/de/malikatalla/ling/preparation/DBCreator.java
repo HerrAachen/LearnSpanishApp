@@ -32,14 +32,17 @@ import de.malikatalla.ling.ling.Flection;
 /** Takes a wiktionary dump as input and creates the database for the android app from it */
 public class DBCreator {
 
-  static final String WIKI_DUMP = "InputData/eswiktionary-20140322-pages-meta-current.xml";
+  static final String WIKI_DUMP_DIR = "InputData";
+  static final String WIKI_DUMP_PATTERN = "eswiktionary-[0-9]*-pages-meta-current.xml";
   private static final File ENDINGS_FILE = new File("InputData/conjugations.txt");
   private static final String COMMA = ",";
 
   public static void main(String[] args) throws ClassNotFoundException, SQLException, ParserConfigurationException, SAXException,
       IOException {
+    File wikiDump = FileUtils.findWikiDump();
+    System.out.println("Using wiki dump: " + wikiDump);
     Map<String, ConjugationDescription> conjugations = WictionaryConjugationExtractor
-        .extractConjugations(WIKI_DUMP);
+        .extractConjugations(wikiDump);
     createDatabase(conjugations);
   }
 

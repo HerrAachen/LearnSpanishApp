@@ -1,5 +1,6 @@
 package de.malikatalla.ling.preparation;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,15 +21,15 @@ import org.xml.sax.helpers.DefaultHandler;
 public class WictionaryVerbParser {
 
    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-      extractVerbs(DBCreator.WIKI_DUMP);
+      extractVerbs(FileUtils.findWikiDump());
    }
 
-   public static Map<String, String> extractVerbs(String pathToWictionaryExport) throws ParserConfigurationException, SAXException, IOException {
+   public static Map<String, String> extractVerbs(File wikiDump) throws ParserConfigurationException, SAXException, IOException {
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser saxParser = factory.newSAXParser();
 
       WictionaryVerbTextExtractor handler = new WictionaryVerbTextExtractor();
-      saxParser.parse(pathToWictionaryExport, handler);
+      saxParser.parse(wikiDump, handler);
       return handler.getTitle2Text();
    }
 
