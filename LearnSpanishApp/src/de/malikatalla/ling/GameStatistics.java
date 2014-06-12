@@ -1,9 +1,19 @@
 package de.malikatalla.ling;
 
-public class ShallowStats implements Statistics {
+import java.io.Serializable;
+
+public class GameStatistics implements Statistics, Serializable {
 
 	private int correct = 0;
 	private int wrong = 0;
+
+	public void incrementCorrect(){
+	  correct++;
+	}
+	
+	public void incrementWrong(){
+	  wrong++;
+	}
 	
 	@Override
 	public float getPercentageCorrect() {

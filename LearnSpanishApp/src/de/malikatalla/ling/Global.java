@@ -1,7 +1,5 @@
 package de.malikatalla.ling;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import android.content.Context;
 import de.malikatalla.ling.ling.ColumnConverter;
 import de.malikatalla.ling.ling.ColumnConverterSpanish;
@@ -12,15 +10,21 @@ import de.malikatalla.ling.ling.Language;
 public class Global {
 
   public static final String DEBUG = "Test";
+  public static final String STATISTICS = "STATS";
 
   private static Dictionary dictionary;
   private static ColumnConverter columnConverter;
 
   private static final Language VERB_LANGUAGE = Language.SPANISH;
   private static boolean isInitiated = false;
+  private static OverallStatistics stats = new OverallStatistics();
 
   public static void init() {
     init(null);
+  }
+
+  public static OverallStatistics getStats() {
+    return stats;
   }
 
   public static void init(Context context) {

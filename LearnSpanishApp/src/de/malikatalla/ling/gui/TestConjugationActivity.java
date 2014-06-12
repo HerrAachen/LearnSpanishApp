@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import de.malikatalla.ling.GameStatistics;
 import de.malikatalla.ling.Global;
 import de.malikatalla.ling.R;
 import de.malikatalla.ling.ling.ColumnConverter;
@@ -31,12 +32,13 @@ public class TestConjugationActivity extends Activity {
   private TextView questionNumberView;
   private String inflectedForm;
   private int questionCount = 0;
-  private static final int MAX_QUESTIONS = 3;
+  private static final int MAX_QUESTIONS = 10;
   private Random randomNumberGenerator;
   private List<String> verbs;
   private List<Button> buttons;
   private Button chosenButton;
   private Button correctButton;
+  private GameStatistics stats;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +62,14 @@ public class TestConjugationActivity extends Activity {
     personalPronounView = (TextView) findViewById(R.id.test_personal_pronoun);
     randomNumberGenerator = new Random();
     questionNumberView = (TextView) findViewById(R.id.test_question_number);
+    stats = new GameStatistics();
     nextQuestionToGUI();
   }
 
   private void nextQuestionToGUI() {
     if (questionCount>=MAX_QUESTIONS){
       Intent intent = new Intent(this, FinishedActivity.class);
-      intent.putExtra("Bla", "Go Ahead");
+      intent.putExtra(Global.STATISTICS, stats);
       startActivity(intent);
     }
     correctButton = null;
@@ -120,9 +123,11 @@ public class TestConjugationActivity extends Activity {
     String answer = chosenButton.getText().toString();
     if (answer.equals(inflectedForm)) {
       // chosenButton.setBackgroundColor(Color.GREEN);
+      stats.incrementCorrect();
       chosenButton.getBackground().setColorFilter(Color.GREEN, Mode.MULTIPLY);
       delay = 300;
     } else {
+      stats.incrementWrong();
       chosenButton.getBackground().setColorFilter(Color.RED, Mode.MULTIPLY);
       correctButton.getBackground().setColorFilter(Color.GREEN, Mode.MULTIPLY);
     }
@@ -142,15 +147,4 @@ public class TestConjugationActivity extends Activity {
       verifyAnswer();
     }
   }
-
-  // class PressEnterListener implements TextView.OnEditorActionListener {
-  //
-  // @Override
-  // public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-  // if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-  // verifyAnswer();
-  // }
-  // return false;
-  // }
-  // }
 }

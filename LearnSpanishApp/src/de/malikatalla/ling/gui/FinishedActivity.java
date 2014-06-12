@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import de.malikatalla.ling.GameStatistics;
 import de.malikatalla.ling.Global;
 import de.malikatalla.ling.R;
 
@@ -19,7 +21,10 @@ public class FinishedActivity extends ActionBarActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_finished);
+    GameStatistics s = (GameStatistics) getIntent().getExtras().get(Global.STATISTICS);
 
+    TextView statsView = (TextView) findViewById(R.id.finished_statistics);
+    statsView.setText(s.getAbsoluteCorrect() + " out of " + s.getAbsoluteTotal());
     if (savedInstanceState == null) {
       getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
     }
