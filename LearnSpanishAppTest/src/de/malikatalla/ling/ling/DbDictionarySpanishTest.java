@@ -93,6 +93,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("asgo", d.getInflectedForm("asir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("has", d.getInflectedForm("haber", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("estoy", d.getInflectedForm("estar", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("estás", d.getInflectedForm("estar", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("ha", d.getInflectedForm("haber", Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
   }
   

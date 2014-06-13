@@ -61,5 +61,9 @@ public class Global {
     }
     return columnConverter;
   }
+  
+  public static Language getVerbLanguage(){
+	  return VERB_LANGUAGE;
+  }
 
 }

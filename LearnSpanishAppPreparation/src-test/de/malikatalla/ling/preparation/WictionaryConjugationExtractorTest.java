@@ -64,9 +64,15 @@ public class WictionaryConjugationExtractorTest {
 
   @Test
   public void testParseInflectedForm() {
-    assertEquals("abc", WictionaryConjugationExtractor.parseInflectedForm("{{abc}}"));
-    assertEquals("habed", WictionaryConjugationExtractor.parseInflectedForm("''habed''**"));
-    assertEquals("asgo", WictionaryConjugationExtractor.parseInflectedForm("'''[[asgo]]'''"));
+    assertEquals("abc", WictionaryConjugationExtractor.parseInflectedForm("{{abc}}","@"));
+    assertEquals("habed", WictionaryConjugationExtractor.parseInflectedForm("''habed''**","@"));
+    assertEquals("asgo", WictionaryConjugationExtractor.parseInflectedForm("'''[[asgo]]'''","@"));
+  }
+  
+  @Test
+  public void testReplaceInnerSplitters() {
+	  assertEquals("es.v.conj.ar|est|irregular=x|i.p.1s={{resaltar@[[estoy]]}}|i.p.2s={{resaltar@[[estás]]}}", 
+			  WictionaryConjugationExtractor.replaceInnerSplitters("es.v.conj.ar|est|irregular=x|i.p.1s={{resaltar|[[estoy]]}}|i.p.2s={{resaltar|[[estás]]}}", "@"));
   }
 
 }

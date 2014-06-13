@@ -22,6 +22,14 @@ public class WictionaryConjugationExtractor {
   private static final String conjugationES = "es.v.conj";
   private static final String PLANTILLA = "Plantilla:";
   private static final Pattern LINE_BREAK = Pattern.compile("[\\n\\r]");
+  private static String illegalConjugations;
+  
+  static {
+	  switch(Global.getVerbLanguage()){
+	  case SPANISH:illegalConjugations = "resaltar";
+	  default:
+	  }
+  }
 
   public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
     extractConjugations(FileUtils.findWikiDump());
@@ -57,7 +65,10 @@ public class WictionaryConjugationExtractor {
 
   private static ConjugationDescription parseConjugationDescription(String description) {
     if (description != null) {
+    	System.out.println("conjugation description: " + description);
       description = removeOuterBrackets(description, new String[] { "{", "}" });
+      final String innerSplitter = "@";
+      description = replaceInnerSplitters(description, innerSplitter);
       String[] parts = description.split("\\|");
       // first element describes the regular conjugation
       String basicConjugation = parts[0];
@@ -92,7 +103,7 @@ public class WictionaryConjugationExtractor {
           String right = leftAndRight[1];
           Flection flection = parseFlection(left);
           if (flection != null) {
-            String inflectedForm = parseInflectedForm(right);
+            String inflectedForm = parseInflectedForm(right, innerSplitter);
             desc.getIrregularFlections().addInflectedForm(flection, inflectedForm);
           }
         }
@@ -102,11 +113,37 @@ public class WictionaryConjugationExtractor {
     return null;
   }
 
-  static String parseInflectedForm(String right) {
+  static String replaceInnerSplitters(String description, String replacement) {
+	  int bracketLevel = 0;
+	  for(int i=0;i<description.length();i++){
+		  char ch = description.charAt(i);
+		if (ch=='{'){
+			  bracketLevel++;
+		  }
+		  if (ch=='}'){
+			  bracketLevel--;
+		  }
+		  if (ch=='|' && bracketLevel>0){
+			  description = description.substring(0, i) + replacement + description.substring(i+1);
+		  }
+	  }
+	  return description;
+}
+
+static String parseInflectedForm(String right, String splitter) {
     String inner = removeOuterBrackets(right, new String[]{"{","}","[","]","*","'"});
-    String[] innerParts = inner.split("\\|");
+    String[] innerParts = inner.split(splitter);
+    try {
     if (innerParts.length>=1){
+    	if (innerParts[0].equals(illegalConjugations)){
+    		return removeOuterBrackets(innerParts[1],new String[]{"{","}","[","]","*","'"});
+    	}
       return innerParts[0];
+    }
+    }
+    catch(Exception e){
+    	System.out.println("parse inflected form: " + right);
+    	e.printStackTrace();
     }
     throw new RuntimeException(WictionaryConjugationExtractor.class.getSimpleName() + ": Something bad happened");
   }
