@@ -55,21 +55,15 @@ public class WictionaryVerbParser {
          } else if (qName.equals(TEXT)) {
             inText = true;
          }
-
-         // if (inVerb){
-         // System.out.print("<" + qName + "> ");
-         // }
       }
 
       public void endElement(String uri, String localName, String qName) throws SAXException {
          if (qName.equals(PAGE)) {
             inPage = false;
             if (inVerb) {
-               if (text.toString().contains("{{ES|" + title)) {
-//                   System.out.println("\n === TITLE:" + title + " ===");
+               if (text.toString().contains("{{ES|")) {
                   title2Text.put(title, text.toString());
                }
-               // System.out.println("TEXT:" + text.toString());
             }
             inVerb = false;
          } else if (qName.equals(TITLE)) {
@@ -92,12 +86,7 @@ public class WictionaryVerbParser {
             }
             if (inText && text.contains("==Conjugación")) {
                inVerb = true;
-               // System.out.println("Title: " + title);
-               // System.out.println("Text: " + text);
             }
-            // if (inVerb && inText){
-            // System.out.print(text);
-            // }
          }
       }
 
