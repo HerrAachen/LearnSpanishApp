@@ -99,6 +99,14 @@ public class ColumnConverterSpanish extends ColumnConverter {
       return Tense.SIMPLE_PAST;
     } else if (modeString.equals("pi")) {
       return Tense.IMPERFECT;
+    } else if (modeString.equals("pcp")){
+    	return Tense.PLUSCUAM_PERFECT;
+    } else if (modeString.equals("cp")){
+    	return Tense.CONDITIONAL_PERFECT;
+    } else if (modeString.equals("fp")){
+    	return Tense.FUTURE_PERFECT;
+    } else if (modeString.equals("pap")){
+    	return Tense.PAST_PERFECT;
     }
     return null;
   }
@@ -137,6 +145,14 @@ public class ColumnConverterSpanish extends ColumnConverter {
       return "pp";
     case IMPERFECT:
       return "pi";
+    case PLUSCUAM_PERFECT:
+    	return "pcp";
+    case CONDITIONAL_PERFECT:
+    	return "cp";
+    case FUTURE_PERFECT:
+    	return "fp";
+    case PAST_PERFECT:
+    	return "pap";
     default:
       return null;
     }
@@ -181,6 +197,7 @@ public class ColumnConverterSpanish extends ColumnConverter {
     }
   }
 
+  /** Careful when editing: order matters! */
   public List<Flection> flectionIterator() {
     if (allFlections == null) {
       allFlections = new ArrayList<Flection>();
@@ -202,30 +219,6 @@ public class ColumnConverterSpanish extends ColumnConverter {
       allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.SIMPLE_PAST, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
-      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.FUTURE, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.FUTURE, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
@@ -256,6 +249,37 @@ public class ColumnConverterSpanish extends ColumnConverter {
       allFlections.add(new Flection(Tense.FUTURE, Person.FIRST, Number.PLURAL, null, Mode.SUBJUNCTIVE));
       allFlections.add(new Flection(Tense.FUTURE, Person.SECOND, Number.PLURAL, null, Mode.SUBJUNCTIVE));
       allFlections.add(new Flection(Tense.FUTURE, Person.THIRD, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+      allFlections.add(new Flection(null, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.THIRD, Number.SINGULAR, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, Person.THIRD, Number.PLURAL, null, Mode.IMPERATIVE));
+      allFlections.add(new Flection(null, null, null, null, Mode.PARTICIPLE));
+      //compound flections should be last
+      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PAST_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.CONDITIONAL_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.INDICATIVE));
+      allFlections.add(new Flection(Tense.FUTURE_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.INDICATIVE));
       allFlections.add(new Flection(Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
       allFlections.add(new Flection(Tense.PAST_PERFECT, Person.SECOND, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
       allFlections.add(new Flection(Tense.PAST_PERFECT, Person.THIRD, Number.SINGULAR, null, Mode.SUBJUNCTIVE));
@@ -268,12 +292,6 @@ public class ColumnConverterSpanish extends ColumnConverter {
       allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.FIRST, Number.PLURAL, null, Mode.SUBJUNCTIVE));
       allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.SECOND, Number.PLURAL, null, Mode.SUBJUNCTIVE));
       allFlections.add(new Flection(Tense.PLUSCUAM_PERFECT, Person.THIRD, Number.PLURAL, null, Mode.SUBJUNCTIVE));
-      allFlections.add(new Flection(null, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
-      allFlections.add(new Flection(null, Person.THIRD, Number.SINGULAR, null, Mode.IMPERATIVE));
-      allFlections.add(new Flection(null, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
-      allFlections.add(new Flection(null, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
-      allFlections.add(new Flection(null, Person.THIRD, Number.PLURAL, null, Mode.IMPERATIVE));
-      allFlections.add(new Flection(null, null, null, null, Mode.PARTICIPLE));
     }
     return allFlections;
   }
