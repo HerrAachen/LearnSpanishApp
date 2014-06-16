@@ -99,6 +99,8 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   
   public void testAprenderse(){
     Dictionary allInflectedForms = d.getAllInflectedForms("aprenderse");
+    assertEquals("aprendaos", d.getInflectedForm("aprenderse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
+    assertEquals("aprendaos", allInflectedForms.getInflectedForm("aprenderse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
   }
 
 //  public void testCoverage() throws Exception {

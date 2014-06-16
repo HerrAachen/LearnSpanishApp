@@ -11,13 +11,28 @@
         android:layout_gravity="center_horizontal"
         android:onClick="callShowConjugation"
         android:text="@string/show_conjugation" />
-    <Button
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:onClick="callTestConjugation"
         android:text="@string/test_conjugation" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="callGuessPerson"
+        android:text="@string/guess_person" />
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="callShowStatistics"
+        android:text="@string/show_statistics" />
+    
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -27,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="LearnSpanish App for Android by Malik Atalla"
+            android:text="@string/main_subtitle"
             android:textSize="12sp" />
 
     </FrameLayout>

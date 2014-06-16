@@ -6,6 +6,8 @@ import de.malikatalla.ling.ling.ColumnConverterSpanish;
 import de.malikatalla.ling.ling.DbDictionarySpanish;
 import de.malikatalla.ling.ling.Dictionary;
 import de.malikatalla.ling.ling.Language;
+import de.malikatalla.ling.ling.LingUtil;
+import de.malikatalla.ling.ling.LingUtilSpanish;
 
 public class Global {
 
@@ -14,6 +16,7 @@ public class Global {
 
   private static Dictionary dictionary;
   private static ColumnConverter columnConverter;
+  private static LingUtil lingUtil;
 
   private static final Language VERB_LANGUAGE = Language.SPANISH;
   private static boolean isInitiated = false;
@@ -36,6 +39,7 @@ public class Global {
           dictionary = new DbDictionarySpanish(context);
         }
         columnConverter = new ColumnConverterSpanish();
+        lingUtil = new LingUtilSpanish();
         break;
       case GERMAN:
         break; // not yet implemented
@@ -60,6 +64,13 @@ public class Global {
       init();
     }
     return columnConverter;
+  }
+  
+  public static LingUtil getLingUtil(){
+    if (!isInitiated){
+      init();
+    }
+    return lingUtil;
   }
   
   public static Language getVerbLanguage(){

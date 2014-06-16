@@ -184,7 +184,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
       }
     }
-    // Log.i(Global.DEBUG, endings.toString());
+//    Log.i(Global.DEBUG, "DbDictionary " + endings.toString());
     for (int endingsIndex = 0; endingsIndex < endings.size(); endingsIndex++) {
       String currentEnding = endings.get(endingsIndex);
       LinkedList<Integer> rootIndices = new LinkedList<Integer>();
@@ -201,7 +201,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
       }
       if (isImperative && isReflexive && flection.getNumber().equals(Number.PLURAL)
-          && (flection.getPerson() == Person.FIRST || flection.getPerson() == Person.SECOND)) {
+          && (flection.getPerson() == Person.FIRST || flection.getPerson() == Person.SECOND) && currentEnding.length()>0) {
         currentEnding = currentEnding.substring(0, currentEnding.length() - 1);
       }
       String currentConjugation = roots[rootIndex] + currentEnding;
@@ -224,7 +224,7 @@ public class DbDictionarySpanish extends DbDictionary {
     }
     return resultBuilder.toString();
   }
-
+  
   @Override
   public String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m) {
     if (n == null || p == null) {

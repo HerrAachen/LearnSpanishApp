@@ -23,5 +23,8 @@
     <string name="title_activity_finished">FinishedActivity</string>
     <string name="yourResult">Your Result:</string>
     <string name="OK">OK</string>
+    <string name="guess_person">Guess The Person</string>
+    <string name="show_statistics">Show Statistics</string>
+    <string name="main_subtitle">LearnSpanish App for Android by Malik Atalla</string>
 
 </resources>
