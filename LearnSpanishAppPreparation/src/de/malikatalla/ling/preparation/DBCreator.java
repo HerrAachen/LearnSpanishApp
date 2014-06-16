@@ -28,6 +28,7 @@ import de.malikatalla.ling.DBContract.VerbTable;
 import de.malikatalla.ling.Global;
 import de.malikatalla.ling.ling.ColumnConverter;
 import de.malikatalla.ling.ling.Flection;
+import de.malikatalla.ling.ling.Language;
 
 /** Takes a wiktionary dump as input and creates the database for the android app from it */
 public class DBCreator {
@@ -43,10 +44,23 @@ public class DBCreator {
     System.out.println("Using wiki dump: " + wikiDump);
     Map<String, ConjugationDescription> conjugations = WictionaryConjugationExtractor
         .extractConjugations(wikiDump);
+    ConjugationPatch patch = getConjugationPatch(Global.getVerbLanguage());
+    if (patch!=null){
+    	patch.applyPatch(conjugations);
+    } else {
+    	System.out.println("NO CONJUGATION PATCH APPLIED");
+    }
     createDatabase(conjugations);
   }
 
-  private static void createDatabase(Map<String, ConjugationDescription> inf2conj) throws ClassNotFoundException, SQLException {
+  private static ConjugationPatch getConjugationPatch(Language verbLanguage) {
+	switch(verbLanguage){
+	case SPANISH: return new ConjugationPatchSpanish();
+	default: return null;
+	}
+  }
+
+private static void createDatabase(Map<String, ConjugationDescription> inf2conj) throws ClassNotFoundException, SQLException {
     Class.forName("org.sqlite.JDBC");
     Connection conn = DriverManager.getConnection("jdbc:sqlite:" + DBConnector.DATABASE_NAME);
     conn.setAutoCommit(false);

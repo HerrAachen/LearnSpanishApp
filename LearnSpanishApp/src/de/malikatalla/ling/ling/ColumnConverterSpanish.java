@@ -37,8 +37,6 @@ public class ColumnConverterSpanish extends ColumnConverter {
     if (p != null && n != null) {
       builder.append(getShortName(p)).append(getShortName(n));
     }
-    // builder.append(getShortName(n)).append("_").append(getShortName(p)).append("_").append(getShortName(m)).append("_")
-    // .append(getShortName(t));
     return builder.toString();
   }
 
@@ -48,12 +46,15 @@ public class ColumnConverterSpanish extends ColumnConverter {
       throw new NullPointerException("ColumnConverterSpanish.parseColumn: input must not be null");
     }
     String[] parts = input.split("\\.");
-    if (parts.length < 2) {
-      return null;
-    }
     Mode mode = getMode(parts[0], parts);
     if (mode==null){
       return null;
+    }
+    if (mode==Mode.PARTICIPLE){
+    	return new Flection(null, null, null, null, Mode.PARTICIPLE);
+    }
+    if (parts.length < 2) {
+    	return null;
     }
     Tense tense = null;
     Person person = null;
@@ -89,6 +90,9 @@ public class ColumnConverterSpanish extends ColumnConverter {
   }
 
   private Tense getTense(String modeString) {
+	  if (modeString==null){
+		  return null;
+	  }
     if (modeString.equals("p")) {
       return Tense.PRESENT;
     } else if (modeString.equals("f")) {

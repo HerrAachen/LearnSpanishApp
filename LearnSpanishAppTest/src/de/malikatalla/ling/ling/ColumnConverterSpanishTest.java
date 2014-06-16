@@ -1,9 +1,8 @@
 package de.malikatalla.ling.ling;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import junit.framework.TestCase;
+
+import org.junit.Before;
 
 public class ColumnConverterSpanishTest extends TestCase {
   private ColumnConverter cc;
