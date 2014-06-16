@@ -25,4 +25,9 @@ public class LingUtilSpanish implements LingUtil {
     }
     return -1;
   }
+
+  @Override
+  public boolean isReflexive(String infinitive) {
+    return infinitive!=null && infinitive.toLowerCase().endsWith("se");
+  }
 }

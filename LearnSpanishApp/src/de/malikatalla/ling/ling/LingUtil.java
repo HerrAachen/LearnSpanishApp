@@ -12,4 +12,6 @@ public interface LingUtil {
    *         is null or if there is no such character.
    */
   int firstTilde(String word);
+  
+  boolean isReflexive(String infinitive);
 }
