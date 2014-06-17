@@ -65,7 +65,6 @@ public class WictionaryConjugationExtractor {
 
   private static ConjugationDescription parseConjugationDescription(String description) {
     if (description != null) {
-    	System.out.println("conjugation description: " + description);
       description = removeOuterBrackets(description, new String[] { "{", "}" });
       final String innerSplitter = "@";
       description = replaceInnerSplitters(description, innerSplitter);
