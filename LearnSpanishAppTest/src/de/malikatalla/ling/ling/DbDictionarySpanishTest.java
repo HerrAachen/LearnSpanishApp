@@ -105,6 +105,11 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   public void testIrregularIr() {
     assertEquals("voy", d.getInflectedForm("ir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
+  
+  public void testNexoCocer() {
+    assertEquals("cuezo", d.getInflectedForm("cocer", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("cocerás", d.getInflectedForm("cocer", Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+  }
 
   public void testAprenderse() {
     Dictionary allInflectedForms = d.getAllInflectedForms("aprenderse");

@@ -7,6 +7,8 @@ public class ConjugationDescription {
   private String basicConjugation;
   private String root;
   private Flections irregularFlections = new Flections();
+  /** A connection element possibly needed to create the regular conjugation */
+  private String nexo;
 
   /**
    * Those flections that are not derived from the basic conjugations. Is never
@@ -37,5 +39,9 @@ public class ConjugationDescription {
 
   public void setRoot(String root) {
     this.root = root;
+  }
+  
+  public void setNexo(String nexo){
+    this.nexo = nexo;
   }
 }

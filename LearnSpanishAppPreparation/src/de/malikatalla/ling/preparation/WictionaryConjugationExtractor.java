@@ -104,6 +104,9 @@ public class WictionaryConjugationExtractor {
           if (flection != null) {
             String inflectedForm = parseInflectedForm(right, innerSplitter);
             desc.getIrregularFlections().addInflectedForm(flection, inflectedForm);
+          } else if (left.toLowerCase().equals("nexo")){
+            desc.setNexo(right);
+            System.out.println("nexo=" + right + " for " + root);
           }
         }
       }
