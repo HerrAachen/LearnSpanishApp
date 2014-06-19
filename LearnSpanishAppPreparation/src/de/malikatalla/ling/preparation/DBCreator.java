@@ -82,7 +82,7 @@ private static void createDatabase(Map<String, ConjugationDescription> inf2conj)
     sql = new StringBuilder();
     stat.executeUpdate("drop table if exists " + VerbTable.TABLE_NAME);
     sql.append("create table " + VerbTable.TABLE_NAME + " (" + VerbTable.COLUMN_INFINITIVE + " TEXT" + COMMA
-        + VerbTable.COLUMN_ROOT + " TEXT" + COMMA + VerbTable.COLUMN_CONJUGATION + " INTEGER");
+        + VerbTable.COLUMN_ROOT + " TEXT" + COMMA + VerbTable.COLUMN_NEXO + " TEXT" + COMMA + VerbTable.COLUMN_CONJUGATION + " INTEGER");
     for (Flection f : cc.flectionIterator()) {
       addColumn(cc.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
     }
@@ -133,7 +133,7 @@ private static void createDatabase(Map<String, ConjugationDescription> inf2conj)
     System.out.println("Creating verb table");
     insertStatement = new StringBuilder();
     insertStatement.append("insert into " + VerbTable.TABLE_NAME + " values (");
-    for (int j = 0; j < ENDINGS_COUNT + 3; j++) {
+    for (int j = 0; j < ENDINGS_COUNT + 4; j++) {
       insertStatement.append("?,");
     }
     PreparedStatement prep2 = conn.prepareStatement(insertStatement.substring(0, insertStatement.length() - 1) + ")");
@@ -141,8 +141,10 @@ private static void createDatabase(Map<String, ConjugationDescription> inf2conj)
       int index = 0;
       prep2.setString(++index, entry.getKey());
       ConjugationDescription conjugationDescription = entry.getValue();
+//      System.out.println("DBCreator nexo: " + conjugationDescription.getNexo());
       prep2.setString(++index, conjugationDescription.getRoot());
       System.out.println(count++ + "/" + inf2conj.size() + " " + entry.getKey() + " " + conjugationDescription);
+      prep2.setString(++index, conjugationDescription.getNexo());
       prep2.setInt(++index, conj2ID.get(conjugationDescription.getBasicConjugation()));
       for(Flection f: cc.flectionIterator()){
         String inflectedForm = conjugationDescription.getIrregularFlections().getInflectedForm(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode());

@@ -44,4 +44,8 @@ public class ConjugationDescription {
   public void setNexo(String nexo){
     this.nexo = nexo;
   }
+
+  public String getNexo() {
+    return nexo;
+  }
 }

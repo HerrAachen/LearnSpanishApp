@@ -38,9 +38,10 @@ public class DbDictionarySpanish extends DbDictionary {
         if (res.moveToNext()) {
           String roots = res.getString(res.getColumnIndex(VerbTable.COLUMN_ROOT));
           String infinitive = res.getString(res.getColumnIndex(VerbTable.COLUMN_INFINITIVE));
+          String nexo = res.getString(res.getColumnIndex(VerbTable.COLUMN_NEXO));
           Flections flections = new Flections(infinitive);
           for (Flection flection : Global.getColumnConverter().flectionIterator()) {
-            String inflection = getInflectedForm(roots, flection, res, infinitive);
+            String inflection = getInflectedForm(roots, flection, res, infinitive, nexo);
             if (inflection != null) {
               flections.addInflectedForm(flection, inflection);
             }
@@ -50,7 +51,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
       }
 
-      private String getInflectedForm(String roots, Flection flection, Cursor res, String infinitive) {
+      private String getInflectedForm(String roots, Flection flection, Cursor res, String infinitive, String nexo) {
         String compound = handleCompoundTenses(infinitive, flection.getTense(), flection.getPerson(), flection.getNumber(), flection.getGender(),flection.getMode());
         if (compound!=null){
           return compound;
@@ -62,7 +63,7 @@ public class DbDictionarySpanish extends DbDictionary {
         }
         int columnIndex = res.getColumnIndex(conjugationColumn);
         if (columnIndex >= 0) {
-          return extractConjugation(roots, res.getString(columnIndex), flection, infinitive);
+          return extractConjugation(roots, res.getString(columnIndex), flection, infinitive, nexo);
         }
         return null;
       }
@@ -105,13 +106,14 @@ public class DbDictionarySpanish extends DbDictionary {
         .query(VerbTable.TABLE_NAME + " INNER JOIN " + ConjugationTable.TABLE_NAME + " ON " + VerbTable.TABLE_NAME + "."
             + VerbTable.COLUMN_CONJUGATION + "=" + ConjugationTable.TABLE_NAME + "." + ConjugationTable.COLUMN_CONJ_ID,
             new String[] { VerbTable.COLUMN_ROOT, ConjugationTable.TABLE_NAME + "." + conjugationColumn,
-                VerbTable.COLUMN_INFINITIVE, }, VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_INFINITIVE + "='" + infinitive
+                VerbTable.COLUMN_INFINITIVE, VerbTable.COLUMN_NEXO}, VerbTable.TABLE_NAME + "." + VerbTable.COLUMN_INFINITIVE + "='" + infinitive
                 + "'", null, null, null, null);
     if (res.moveToNext()) {
       String roots = res.getString(0);
       String ending = res.getString(1);
+      String nexo = res.getString(3);
       // Log.i(Global.DEBUG, roots + " " + ending);
-      return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive);
+      return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive, nexo);
     }
     return null;
   }
@@ -154,7 +156,7 @@ public class DbDictionarySpanish extends DbDictionary {
     return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT) || t.equals(Tense.CONDITIONAL_PERFECT)) && (m.equals(Mode.INDICATIVE) || m.equals(Mode.SUBJUNCTIVE));
   }
 
-  private String extractConjugation(String rootsString, String ending, Flection flection, String infinitive) {
+  private String extractConjugation(String rootsString, String ending, Flection flection, String infinitive, String nexo) {
     String[] roots = rootsString.split(";");
     if (ending == null) {
       return null;
@@ -204,7 +206,7 @@ public class DbDictionarySpanish extends DbDictionary {
           && (flection.getPerson() == Person.FIRST || flection.getPerson() == Person.SECOND) && currentEnding.length()>0) {
         currentEnding = currentEnding.substring(0, currentEnding.length() - 1);
       }
-      String currentConjugation = roots[rootIndex] + currentEnding;
+      String currentConjugation = roots[rootIndex] + expandNexo(nexo, currentEnding, infinitive)+ currentEnding;
       if (isReflexive) {
         if (isImperative) {
           currentConjugation = currentConjugation
@@ -225,6 +227,72 @@ public class DbDictionarySpanish extends DbDictionary {
     return resultBuilder.toString();
   }
   
+  private String expandNexo(String nexo, String ending, String infinitive) {
+    if (nexo==null){
+      return "";
+    }
+    int nexoIndex = infinitive.lastIndexOf(nexo);
+    boolean followingVowelWeak = isVowelGroup1(infinitive.substring(nexoIndex+nexo.length()));
+    if (followingVowelWeak){
+      if (nexo.equals("g")){
+        if (isVowelGroup1(ending)){
+          return "g";
+        } else {
+          return "j";
+        }
+      } else if (nexo.equals("c")){
+        if (isVowelGroup1(ending)){
+          return "c";
+        } else {
+          return "z";
+        }
+      } else if (nexo.equals("qu")){
+        if (isVowelGroup1(ending)){
+          return "qu";
+        } else {
+          return "c";
+        }
+      } else if (nexo.equals("gu")){
+//        if (isVowelGroup1(ending)){
+//          return "qu";
+//        } else {
+//          return "c";
+//        }
+      } 
+    } else {
+      if (nexo.equals("g")){
+        if (isVowelGroup1(ending)){
+          return "gu";
+        } else {
+          return "g";
+        }
+      } else if (nexo.equals("c")){
+        if (isVowelGroup1(ending)){
+          return "qu";
+        } else {
+          return "c";
+        }
+      } else if (nexo.equals("z")){
+        if (isVowelGroup1(ending)){
+          return "c";
+        } else {
+          return "z";
+        }
+      } else if (nexo.equals("gu")){
+//      if (isVowelGroup1(ending)){
+//      return "qu";
+//    } else {
+//      return "c";
+//    }
+  } 
+    }
+    return nexo;
+  }
+
+  private boolean isVowelGroup1(String string) {
+    return string.startsWith("e") || string.startsWith("i") || string.startsWith("é") || string.startsWith("í");
+  }
+
   @Override
   public String getPersonalPronoun(Tense t, Person p, Number n, Gender g, Mode m) {
     if (n == null || p == null) {

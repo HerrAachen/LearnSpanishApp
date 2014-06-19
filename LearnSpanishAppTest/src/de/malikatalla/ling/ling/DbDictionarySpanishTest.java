@@ -83,12 +83,6 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("aproximaos", d.getInflectedForm("aproximarse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
     assertEquals("aproxímense", d.getInflectedForm("aproximarse", Tense.PRESENT, Person.THIRD, Number.PLURAL, null, Mode.IMPERATIVE));
   }
-  
-  public void testImperativeReflexiveRepanchingarse() {
-    assertEquals("repanchíngate", d.getInflectedForm("repanchingarse", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
-    assertEquals("repanchinguémonos", d.getInflectedForm("repanchingarse", Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
-    assertEquals("repanchínguense", d.getInflectedForm("repanchingarse", Tense.PRESENT, Person.THIRD, Number.PLURAL, null, Mode.IMPERATIVE));
-  }
 
   public void testIndicativePastPerfect() {
     assertEquals("he esperado", d.getInflectedForm("esperar", Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
@@ -105,10 +99,45 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   public void testIrregularIr() {
     assertEquals("voy", d.getInflectedForm("ir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
+
+  public void testNexoRepanchingarse() {
+    assertEquals("repanchíngate", d.getInflectedForm("repanchingarse", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
+    assertEquals("repanchinguémonos", d.getInflectedForm("repanchingarse", Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
+    assertEquals("repanchínguense", d.getInflectedForm("repanchingarse", Tense.PRESENT, Person.THIRD, Number.PLURAL, null, Mode.IMPERATIVE));
+  }
+  
+  public void testNexoCorregir() {
+    assertEquals("corrige", d.getInflectedForm("corregir", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
+    assertEquals("corrijo", d.getInflectedForm("corregir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("corrijamos", d.getInflectedForm("corregir", Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.SUBJUNCTIVE));
+  }
+  
+  public void testInterferir() {
+    assertEquals("interfiere", d.getInflectedForm("interferir", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
+  }
   
   public void testNexoCocer() {
     assertEquals("cuezo", d.getInflectedForm("cocer", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("cocerás", d.getInflectedForm("cocer", Tense.FUTURE, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+  }
+  
+  public void testNexoDelinquir() {
+    assertEquals("delinco", d.getInflectedForm("delinquir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("delinques", d.getInflectedForm("delinquir", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.INDICATIVE));
+  }
+  
+  public void testNexoSaborizar() {
+    assertEquals("saborizo", d.getInflectedForm("saborizar", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("saboricé", d.getInflectedForm("saborizar", Tense.SIMPLE_PAST, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+  }
+  
+  public void testNexoExtinguir() {
+    assertEquals("extingo", d.getInflectedForm("extinguir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+  }
+  
+  public void testNexoDeslenguarse() {
+    assertEquals("me deslenguo", d.getInflectedForm("deslenguarse", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("me deslengüé", d.getInflectedForm("deslenguarse", Tense.SIMPLE_PAST, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
 
   public void testAprenderse() {
