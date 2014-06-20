@@ -65,6 +65,7 @@ public class WictionaryConjugationExtractor {
 
   private static ConjugationDescription parseConjugationDescription(String description) {
     if (description != null) {
+      System.out.println(description);
       description = removeOuterBrackets(description, new String[] { "{", "}" });
       final String innerSplitter = "@";
       description = replaceInnerSplitters(description, innerSplitter);
@@ -106,7 +107,6 @@ public class WictionaryConjugationExtractor {
             desc.getIrregularFlections().addInflectedForm(flection, inflectedForm);
           } else if (left.toLowerCase().equals("nexo")){
             desc.setNexo(right);
-            System.out.println("nexo=" + right + " for " + root);
           }
         }
       }
