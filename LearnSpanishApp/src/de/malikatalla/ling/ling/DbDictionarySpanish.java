@@ -119,9 +119,9 @@ public class DbDictionarySpanish extends DbDictionary {
   }
 
   private String handleCompoundTenses(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
-    Log.i(Global.DEBUG, "handleCompound " + t + " " + m);
+//    Log.i(Global.DEBUG, "handleCompound " + t + " " + m);
     if (isCompoundTense(t, m)) {
-      Log.i(Global.DEBUG, "is Compound: ");
+//      Log.i(Global.DEBUG, "is Compound: ");
       String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
       String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
       return auxiliary + " " + participle;

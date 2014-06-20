@@ -142,8 +142,8 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
 
   public void testAprenderse() {
     Dictionary allInflectedForms = d.getAllInflectedForms("aprenderse");
-    assertEquals("aprendaos", d.getInflectedForm("aprenderse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
-    assertEquals("aprendaos",
+    assertEquals("aprendeos", d.getInflectedForm("aprenderse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
+    assertEquals("aprendeos",
         allInflectedForms.getInflectedForm("aprenderse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
   }
 

@@ -10,7 +10,7 @@ es.v.conj.arse	o	as	a	amos	áis	an	aba	abas	aba	ábamos	abais	aban	é	aste	ó	amos	a
 es.v.conj.car	co	cas	ca	camos	cáis	can	caba	cabas	caba	cábamos	cabais	caban	qué	caste	có	camos	casteis	caron	caré	carás	cará	caremos	caréis	carán	caría	carías	caría	caríamos	caríais	carían	que	ques	que	quemos	quéis	quen	cara;case;	caras;cases	cara;case	cáramos;cásemos	carais;caseis	caran;casen	care	cares	care	cáremos	careis	caren	ca	que	quemos	cad	quen	cado
 es.v.conj.cuar	cúo	cúas	cúa	cuamos	cuáis	cúan	cuaba	cuabas	cuaba	cuábamos	cuabais	cuaban																																										
 es.v.conj.ducir	zco	ces	ce	cimos	cís	cen	cía	cía	cías	cíamos	cíais	cían																																										
-es.v.conj.er	o	es	e	emos	éis	en	ía	ías	ía	íamos	íais	ían	í	iste	ió	imos	isteis	ieron	eré	erás	erá	eremos	eréis	erán	ería	erías	ería	eríamos	eríais	erían	a	as	a	amos	áis	an	iera;iese	ieras;ieses	iera;iese	iéramos;iésemos	ierais;ieseis	ieran;iesen	iere	ieres	iere	iéremos	iereis	ieren						ido
+es.v.conj.er	o	es	e	emos	éis	en	ía	ías	ía	íamos	íais	ían	í	iste	ió	imos	isteis	ieron	eré	erás	erá	eremos	eréis	erán	ería	erías	ería	eríamos	eríais	erían	a	as	a	amos	áis	an	iera;iese	ieras;ieses	iera;iese	iéramos;iésemos	ierais;ieseis	ieran;iesen	iere	ieres	iere	iéremos	iereis	ieren	e	a	amos;r:ámos2	ed	an	ido
 es.v.conj.gar	go	gas	ga	gamos	gáis	gan	gaba	gabas	gaba	gábamos	gabais	gaban																																										
 es.v.conj.ger	jo	ges	ge	gemos	géis	gen	gía	gías	gía	gíamos	gíais	gían																																										
 es.v.conj.gir	jo	ges	ge	gimos	gís	gen	gía	gías	gía	gíamos	gíais	gían																																										
