@@ -253,11 +253,11 @@ public class DbDictionarySpanish extends DbDictionary {
           return "c";
         }
       } else if (nexo.equals("gu")){
-//        if (isVowelGroup1(ending)){
-//          return "qu";
-//        } else {
-//          return "c";
-//        }
+        if (isVowelGroup1(ending)){
+          return "gu";
+        } else {
+          return "g";
+        }
       } 
     } else {
       if (nexo.equals("g")){
@@ -279,11 +279,11 @@ public class DbDictionarySpanish extends DbDictionary {
           return "z";
         }
       } else if (nexo.equals("gu")){
-//      if (isVowelGroup1(ending)){
-//      return "qu";
-//    } else {
-//      return "c";
-//    }
+        if (isVowelGroup1(ending)){
+        return "gü";
+      } else {
+        return "gu";
+      }
   } 
     }
     return nexo;
