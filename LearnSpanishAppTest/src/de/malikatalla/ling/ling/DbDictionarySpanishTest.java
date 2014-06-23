@@ -33,7 +33,11 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     List<String> verbs = d.getAllVerbs();
     assertTrue(verbs.size() > 3000);
     for (String verb : verbs) {
-      assertFalse(verb.matches("\\p{Punct}"));
+      boolean matches = verb.matches(".*[\\p{Punct}\\p{Blank}].*");
+      if (matches){
+        System.out.println("Forbidden char in verb: " + verb);
+      }
+      assertFalse(matches);
     }
   }
 
@@ -71,6 +75,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("acaloraos", d.getInflectedForm("acalorarse", Tense.PRESENT, Person.SECOND, Number.PLURAL, null, Mode.IMPERATIVE));
     assertEquals("abarragánate", d.getInflectedForm("abarraganarse", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
     assertEquals("abarraganémonos", d.getInflectedForm("abarraganarse", Tense.PRESENT, Person.FIRST, Number.PLURAL, null, Mode.IMPERATIVE));
+    assertEquals("acuérdate", d.getInflectedForm("acordarse", Tense.PRESENT, Person.SECOND, Number.SINGULAR, null, Mode.IMPERATIVE));
   }
   
 

@@ -76,8 +76,7 @@ public class WictionaryConjugationExtractor {
         basicConjugation = basicConjugation.substring(PLANTILLA.length());
       }
       // next search the root, usually second element, sometimes there is
-      // more
-      // than one root.
+      // more than one root.
       String root = "";
       if (parts.length > 1) {
         int i = 1;
@@ -86,6 +85,11 @@ public class WictionaryConjugationExtractor {
         }
         while (i < parts.length && !parts[i].contains("=")) {
           root += ";" + parts[i++];
+        }
+        //sometimes there is another root after the first name-value pair
+        i++;
+        if (parts.length>i && !parts[i].contains("=")){
+          root += ";" + parts[i];
         }
         if (root.length() > 0) {
           root = root.substring(1);
