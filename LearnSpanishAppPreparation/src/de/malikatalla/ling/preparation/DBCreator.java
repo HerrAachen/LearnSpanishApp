@@ -75,7 +75,9 @@ private static void createDatabase(Map<String, ConjugationDescription> inf2conj)
     sql.append("create table " + ConjugationTable.TABLE_NAME + " (" + ConjugationTable.COLUMN_CONJ_ID + " INTEGER PRIMARY KEY"
         + COMMA + ConjugationTable.COLUMN_CONJ_DESC + " TEXT");
     for (Flection f : cc.flectionIterator()) {
+//      if (Global.getLingUtil().isCompoundTense(f.getTense(), f.getMode())){
       addColumn(cc.getDBColumn(f.getTense(), f.getPerson(), f.getNumber(), f.getGender(), f.getMode()), sql);
+//      }
     }
     sql.append(")");
     stat.executeUpdate(sql.toString());

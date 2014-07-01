@@ -30,4 +30,12 @@ public class LingUtilSpanish implements LingUtil {
   public boolean isReflexive(String infinitive) {
     return infinitive!=null && infinitive.toLowerCase().endsWith("se");
   }
+  
+  @Override
+  public boolean isCompoundTense(Tense t, Mode m) {
+    if (t == null || m == null) {
+      return false;
+    }
+    return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT) || t.equals(Tense.CONDITIONAL_PERFECT)) && (m.equals(Mode.INDICATIVE) || m.equals(Mode.SUBJUNCTIVE));
+  }
 }

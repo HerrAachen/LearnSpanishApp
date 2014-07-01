@@ -14,4 +14,6 @@ public interface LingUtil {
   int firstTilde(String word);
   
   boolean isReflexive(String infinitive);
+
+  boolean isCompoundTense(Tense t, Mode m);
 }
