@@ -19,8 +19,6 @@ import de.malikatalla.ling.Global;
  * access. Language independent parts should be move to the super class
  */
 public class DbDictionarySpanish extends DbDictionary {
-  
-  LingUtil lingUtil = Global.getLingUtil();
 
   public DbDictionarySpanish(Context context) {
     super(context);
@@ -122,8 +120,8 @@ public class DbDictionarySpanish extends DbDictionary {
 
   private String handleCompoundTenses(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
 //    Log.i(Global.DEBUG, "handleCompound " + t + " " + m);
-    if (lingUtil.isCompoundTense(t, m)) {
-//      Log.i(Global.DEBUG, "is Compound: ");
+    if (isCompoundTense(t, m)) {
+      Log.i(Global.DEBUG, "is Compound: ");
       String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
       String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
       return auxiliary + " " + participle;
@@ -149,6 +147,14 @@ public class DbDictionarySpanish extends DbDictionary {
     default:
       return null;
     }
+  }
+
+  private boolean isCompoundTense(Tense t, Mode m) {
+    if (t == null || m == null) {
+      return false;
+    }
+    return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT) || t.equals(Tense.CONDITIONAL_PERFECT)) 
+        && (m.equals(Mode.INDICATIVE) || m.equals(Mode.SUBJUNCTIVE));
   }
 
   private String extractConjugation(String rootsString, String ending, Flection flection, String infinitive, String nexo) {
