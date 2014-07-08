@@ -20,7 +20,7 @@ import de.malikatalla.ling.Global;
  */
 public class DbDictionarySpanish extends DbDictionary {
   
-  LingUtil lingUtil = Global.getLingUtil();
+//  LingUtil lingUtil = Global.getLingUtil();
 
   public DbDictionarySpanish(Context context) {
     super(context);
@@ -122,7 +122,7 @@ public class DbDictionarySpanish extends DbDictionary {
 
   private String handleCompoundTenses(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
 //    Log.i(Global.DEBUG, "handleCompound " + t + " " + m);
-    if (lingUtil.isCompoundTense(t, m)) {
+    if (Global.getLingUtil().isCompoundTense(t, m)) {
 //      Log.i(Global.DEBUG, "is Compound: ");
       String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
       String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
