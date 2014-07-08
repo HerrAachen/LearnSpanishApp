@@ -103,6 +103,7 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   
   public void testIrregularIr() {
     assertEquals("voy", d.getInflectedForm("ir", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    assertEquals("me voy", d.getInflectedForm("irse", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
   
   public void testIrregularErguir() {
