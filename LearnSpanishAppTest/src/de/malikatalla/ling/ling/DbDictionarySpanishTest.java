@@ -153,7 +153,6 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
   
   public void testCompoundReflexive(){
     assertEquals("me he abalanzado", d.getInflectedForm("abalanzarse", Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
-    
   }
 
   public void testAprenderse() {

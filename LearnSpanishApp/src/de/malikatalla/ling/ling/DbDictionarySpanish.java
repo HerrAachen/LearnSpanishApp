@@ -114,20 +114,23 @@ public class DbDictionarySpanish extends DbDictionary {
       String roots = res.getString(0);
       String ending = res.getString(1);
       String nexo = res.getString(3);
-      // Log.i(Global.DEBUG, roots + " " + ending);
+//      Log.i(Global.DEBUG, "'"+ roots + "','" + nexo + "','" + ending + "'");
       return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive, nexo);
     }
     return null;
   }
 
   private String handleCompoundTenses(String infinitive, Tense t, Person p, Number n, Gender g, Mode m) {
-//    Log.i(Global.DEBUG, "handleCompound " + t + " " + m);
     if (Global.getLingUtil().isCompoundTense(t, m)) {
-//      Log.i(Global.DEBUG, "is Compound: ");
-      Log.i(Global.DEBUG, "is Compound: ");
+      boolean isReflexive = infinitive.endsWith("se");
+      String reflexivePronoun = "";
+      if (isReflexive){
+        reflexivePronoun = getReflexivePronoun(t, p, n, g, m) + " ";
+      }
       String auxiliary = getInflectedForm("haber", mapAuxiliaryTense(t), p, n, g, m);
       String participle = getInflectedForm(infinitive, t, p, n, g, Mode.PARTICIPLE);
-      return auxiliary + " " + participle;
+//      Log.i(Global.DEBUG,"DbDict.handleCompound: '" + reflexivePronoun + "','" +auxiliary + "','" + participle + "'");
+      return reflexivePronoun + auxiliary + " " + participle;
     }
     return null;
   }
@@ -152,14 +155,6 @@ public class DbDictionarySpanish extends DbDictionary {
     }
   }
 
-  private boolean isCompoundTense(Tense t, Mode m) {
-    if (t == null || m == null) {
-      return false;
-    }
-    return (t.equals(Tense.PAST_PERFECT) || t.equals(Tense.PLUSCUAM_PERFECT) || t.equals(Tense.FUTURE_PERFECT) || t.equals(Tense.CONDITIONAL_PERFECT)) 
-        && (m.equals(Mode.INDICATIVE) || m.equals(Mode.SUBJUNCTIVE));
-  }
-
   private String extractConjugation(String rootsString, String ending, Flection flection, String infinitive, String nexo) {
     String[] roots = rootsString.split(";");
     if (ending == null) {
@@ -168,7 +163,7 @@ public class DbDictionarySpanish extends DbDictionary {
     // endings can be null, because db is not complete. After completion
     // should always be non-null
     boolean isImperative = flection.getMode().equals(Mode.IMPERATIVE);
-    boolean isReflexive = infinitive.endsWith("se");
+    boolean isReflexive = infinitive.endsWith("se") && !flection.getMode().equals(Mode.PARTICIPLE);
     List<String> endings = new ArrayList<String>();
     endings.addAll(Arrays.asList(ending.split(";")));
     // Log.i(Global.DEBUG, Arrays.toString(roots));
@@ -228,6 +223,7 @@ public class DbDictionarySpanish extends DbDictionary {
         resultBuilder.append("/");
       }
     }
+    Log.i(Global.DEBUG, "DbDict: '" + resultBuilder.toString() + "'");
     return resultBuilder.toString();
   }
   
