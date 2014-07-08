@@ -150,6 +150,11 @@ public class DbDictionarySpanishTest extends ActivityUnitTestCase<MainActivity> 
     assertEquals("me deslenguo", d.getInflectedForm("deslenguarse", Tense.PRESENT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
     assertEquals("me deslengüé", d.getInflectedForm("deslenguarse", Tense.SIMPLE_PAST, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
   }
+  
+  public void testCompoundReflexive(){
+    assertEquals("me he abalanzado", d.getInflectedForm("abalanzarse", Tense.PAST_PERFECT, Person.FIRST, Number.SINGULAR, null, Mode.INDICATIVE));
+    
+  }
 
   public void testAprenderse() {
     Dictionary allInflectedForms = d.getAllInflectedForms("aprenderse");
