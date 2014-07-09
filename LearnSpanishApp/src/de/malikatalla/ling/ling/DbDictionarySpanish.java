@@ -116,6 +116,8 @@ public class DbDictionarySpanish extends DbDictionary {
       String nexo = res.getString(3);
 //      Log.i(Global.DEBUG, "'"+ roots + "','" + nexo + "','" + ending + "'");
       return extractConjugation(roots, ending, new Flection(t, p, n, g, m), infinitive, nexo);
+    } else if (infinitive.endsWith("se")){
+      return getReflexivePronoun(t,p,n,g,m) + " " + getInflectedForm(infinitive.substring(0, infinitive.length()-2), t,p,n,g,m);
     }
     return null;
   }
