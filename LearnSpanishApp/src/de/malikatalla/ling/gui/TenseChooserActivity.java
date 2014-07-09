@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import de.malikatalla.ling.R;
 import de.malikatalla.ling.R.id;
@@ -22,10 +25,19 @@ public class TenseChooserActivity extends Activity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_tense_chooser);
 
-      Intent intent = getIntent();
-      verb = intent.getStringExtra(ShowVerbsActivity.VERB);
-      TextView t = (TextView) findViewById(R.id.tenseChooserVerb);
-      t.setText(verb);
+//      Intent intent = getIntent();
+//      verb = intent.getStringExtra(ShowVerbsActivity.VERB);
+//      TextView t = (TextView) findViewById(R.id.tenseChooserVerb);
+//      t.setText(verb);
+      LinearLayout lay = (LinearLayout) findViewById(R.id.tenseButtonsLayout);
+      for (int i = 1; i < 3; i++) {
+        Button btnTag = new Button(this);
+        btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        btnTag.setText("Button " + i);
+        btnTag.setId(i);
+        lay.addView(btnTag);
+//        ((Button) findViewById(i)).setOnClickListener(this);
+    }
    }
 
    @Override

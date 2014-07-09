@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name="de.malikatalla.ling.gui.TenseChooserActivity"
-            android:label="@string/title_activity_tense_chooser" >
+            android:label="@string/title_activity_tense_chooser"
+            android:theme="@style/Theme.AppCompat" >
         </activity>
         <activity
             android:name="de.malikatalla.ling.gui.ShowConjugationActivity"
@@ -55,8 +56,12 @@
         </activity>
         <activity
             android:name="de.malikatalla.ling.gui.FinishedActivity"
-            android:theme="@style/Theme.AppCompat"
-            android:label="@string/title_activity_finished" >
+            android:label="@string/title_activity_finished"
+            android:theme="@style/Theme.AppCompat" >
+        </activity>
+        <activity
+            android:name="de.malikatalla.ling.gui.PracticeActivity"
+            android:label="@string/title_activity_practice" >
         </activity>
     </application>
 

@@ -16,15 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:onClick="callTestConjugation"
-        android:text="@string/test_conjugation" />
+        android:onClick="callPractice"
+        android:text="@string/practice" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:onClick="callGuessPerson"
-        android:text="@string/guess_person" />
+        android:onClick="callTestConjugation"
+        android:text="@string/test_conjugation" />
     
     <Button
         android:layout_width="match_parent"

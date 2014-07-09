@@ -36,6 +36,13 @@ public class MainActivity extends Activity {
 
    }
 
+   public void callPractice(View view) {
+     Intent intent = new Intent(this, TenseChooserActivity.class);
+     intent.putExtra(MESSAGE, "Go Ahead");
+     startActivity(intent);
+   }
+   
+   
    public void callShowConjugation(View view) {
       Intent intent = new Intent(this, ShowVerbsActivity.class);
       startActivity(intent);

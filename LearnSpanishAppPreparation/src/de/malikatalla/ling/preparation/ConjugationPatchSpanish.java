@@ -25,6 +25,12 @@ public class ConjugationPatchSpanish implements ConjugationPatch {
     haber.getIrregularFlections().addInflectedForm(new Flection(Tense.PRESENT, Person.THIRD, Number.SINGULAR, null, Mode.INDICATIVE), "ha");
     correctReflexiveConjugations(conjugations);
     correctIr(conjugations);
+    removeErguir(conjugations);
+  }
+
+  private void removeErguir(Map<String, ConjugationDescription> conjugations) {
+    conjugations.remove("erguir");
+    conjugations.remove("erguirse");
   }
 
   private void correctIr(Map<String, ConjugationDescription> conjugations) {

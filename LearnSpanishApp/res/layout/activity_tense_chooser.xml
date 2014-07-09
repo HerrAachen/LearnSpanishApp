@@ -24,20 +24,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty" />
-
     </LinearLayout>
 
-    <Button
-        android:id="@+id/presentIndicative"
+    <LinearLayout
+        android:id="@+id/tenseButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="callShowPresentIndicative"
-        android:text="@string/presentIndicative" />
-
-    <Button
-        android:id="@+id/simplePastIndicative"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/simplePastIndicative" />
+        android:orientation="vertical" >
+    </LinearLayout>
 
 </LinearLayout>

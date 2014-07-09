@@ -24,7 +24,9 @@
     <string name="yourResult">Your Result:</string>
     <string name="OK">OK</string>
     <string name="guess_person">Guess The Person</string>
+    <string name="practice">Practice</string>
     <string name="show_statistics">Show Statistics</string>
     <string name="main_subtitle">LearnSpanish App for Android by Malik Atalla</string>
+    <string name="title_activity_practice">PracticeActivity</string>
 
 </resources>
